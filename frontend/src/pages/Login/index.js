@@ -106,7 +106,7 @@ const Login = () => {
             <Box mx={'auto'} my={'auto'} width={[1, 1 / 2, 1 / 3, 1 / 4]}>
                 <Card>
                     <Image
-                        alt="eKYC logo"
+                        alt="Liken logo"
                         height="150"
                         width={1}
                         src={logo}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
+import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader, Image } from 'rimble-ui';
 
 import qs from 'qs';
 import axios from 'axios';
 
+import logoHorizontal from '../../assets/Logo_horizontal.svg';
 import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
@@ -191,7 +192,12 @@ const Client = () => {
             <Box mx={'auto'} width={[1, 10 / 12]}>
                 <Flex px={2} mx={'auto'} justifyContent='space-between'>
                     <Box my={'auto'}>
-                        <Heading as={'h1'} color='primary'>eKYC</Heading>
+                        <Image
+                            alt="eKYC logo"
+                            height="50"
+                            my={3}
+                            src={logoHorizontal}
+                        />
                     </Box>
                     <Box my={'auto'}>
                         <Button onClick={handleClickLogout}>Logout</Button>
