@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader, Image } from 'rimble-ui';
@@ -8,8 +8,10 @@ import axios from 'axios';
 
 import logoHorizontal from '../../assets/Logo_horizontal.svg';
 import api from '../../service/api';
-import UserData from '../../components/UserData';
+// import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
+
+const UserData = lazy(() => import('../../components/UserData'));
 
 const Client = () => {
 
@@ -205,7 +207,9 @@ const Client = () => {
                 </Flex>
                 <Card>
                     <Heading as={'h2'}>Client data</Heading>
-                    <UserData userData={clientData} />
+                    <Suspense fallback={<Loader mx={'auto'} size='50px' />}>
+                        <UserData userData={clientData} />
+                    </Suspense>
                 </Card>
                 <Card mt={20}>
                     <Flex my={1}>
@@ -215,8 +219,6 @@ const Client = () => {
                                 :
                                 <Heading as={'h3'} my={'auto'}>You have no approved financial institutions</Heading>
                             }
-                        </Box>
-                        <Box ml={10} my={1}>
                             {approvedFiList.join(', ')}
                         </Box>
                     </Flex>
