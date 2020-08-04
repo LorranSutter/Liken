@@ -4,6 +4,14 @@
 
 </div>
 
+## Architecture
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596576288/Liken/Liken_architecture.png' height=700/>
+
+</div>
+
 ## Sequence Diagram
 
 <div align="center">
@@ -11,7 +19,6 @@
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1596147619/Liken/Liken_Sequence_Diagram.svg'/>
 
 </div>
-
 
 # :book: Resources and Technologies :computer:
 
