@@ -1,7 +1,7 @@
 {
-    "name": "ekyc",
+    "name": "liken",
     "version": "1.0.0",
-    "description": "eKYC contract implemented in JavaScript",
+    "description": "Liken contract implemented in JavaScript",
     "main": "index.js",
     "engines": {
         "node": ">=8",

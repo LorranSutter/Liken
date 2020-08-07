@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
+const Liken = require('./lib/liken');
 
-const eKYC = require('./lib/eKYC');
-
-module.exports.eKYC = eKYC;
-module.exports.contracts = [ eKYC ];
+module.exports.Liken = Liken;
+module.exports.contracts = [Liken];

@@ -1,0 +1,38 @@
+[
+    {
+        "publicationData": "2020-08-06T18:25:43.511Z",
+        "MLmodel": "1",
+        "datasetIDs": ["1","2","3"],
+        "whoPublished": {
+            "orgNum": 1,
+            "ledgerUser": "Org1MSP"
+        }
+    },
+    {
+        "publicationData": "2020-08-04T08:14:32.511Z",
+        "MLmodel": "2",
+        "datasetIDs": ["2","4","7"],
+        "whoPublished": {
+            "orgNum": 2,
+            "ledgerUser": "Org2MSP"
+        }
+    },
+    {
+        "publicationData": "2020-08-01T13:56:33.511Z",
+        "MLmodel": "3",
+        "datasetIDs": ["5","8","9"],
+        "whoPublished": {
+            "orgNum": 2,
+            "ledgerUser": "Org2MSP"
+        }
+    },
+    {
+        "publicationData": "2020-08-03T21:10:05.511Z",
+        "MLmodel": "4",
+        "datasetIDs": ["3","6","7"],
+        "whoPublished": {
+            "orgNum": 1,
+            "ledgerUser": "Org1MSP"
+        }
+    }
+]
