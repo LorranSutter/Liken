@@ -37,7 +37,7 @@ async function main() {
         // const fields = ['name', 'address'];
 
         // Evaluate the specified transaction.
-        let result = await contract.evaluateTransaction('getModelData', 'MODEL2');
+        let result = await contract.evaluateTransaction('getModelData', 'MODEL10');
         result = Buffer.from(JSON.parse(result).data).toString();
         console.log(`Transaction has been evaluated, result is: ${result}`);
 

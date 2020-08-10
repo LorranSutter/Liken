@@ -36,8 +36,9 @@ async function main() {
 
         // Submit the specified transaction.
         // const result = await contract.submitTransaction('registerModel', 'new model cool');
-        const result = await contract.submitTransaction('updateModel', 'MODEL2', 'updated model');
-        // const result = await contract.submitTransaction('approve', 'MODEL2', 'updated model');
+        // FOR SOME REASON IT MAY OR MAY NOT FAIL WHEN UPDATE SOMETHING WITH THE SAME MODEL
+        const result = await contract.submitTransaction('updateModel', 'MODEL8', 'updated model by user3 again2');
+        // const result = await contract.submitTransaction('approve', 'MODEL2', 'user3');
         console.log(result.toString());
         console.log('Transaction has been submitted');
 

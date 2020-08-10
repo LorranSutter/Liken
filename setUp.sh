@@ -21,5 +21,7 @@ node enrollAdmin.js 1 admin1
 node enrollAdmin.js 2 admin2
 # node registerUser.js 1 admin1 user1
 node registerUser.js 2 admin2 user2
+node registerUser.js 2 admin2 user3
+node invoke.js 2 user2
 # node populate.js 1 FI1
 popd
