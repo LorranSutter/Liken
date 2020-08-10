@@ -16,10 +16,10 @@ pushd ./test-network
 ./network.sh deployCC -ccn Liken -ccp ../chaincode/javascript/ -ccl javascript -ccv 1 -cci initLedger
 popd
 
-# pushd ./api/utils
-# node enrollAdmin.js 1 admin1
-# node enrollAdmin.js 2 admin2
-# node registerUser.js 1 admin1 user1
-# node registerUser.js 2 admin2 user2
+pushd ./api/utils
+node enrollAdmin.js 1 admin1
+node enrollAdmin.js 2 admin2
+node registerUser.js 1 admin1 user1
+node registerUser.js 2 admin2 user2
 # node populate.js 1 FI1
-# popd
+popd

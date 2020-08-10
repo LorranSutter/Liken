@@ -64,8 +64,8 @@ exports.isOwner = async (ctx, modelKey) => {
 exports.isAllowed = async (ctx, modelKey) => {
     const res = await this.isOwner(ctx, modelKey);
 
-    if (!res) {
-        return false;
+    if (res) {
+        return true;
     }
 
     const callerId = this.getCallerId(ctx);
