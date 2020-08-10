@@ -1,7 +1,10 @@
 const { Contract } = require('fabric-contract-api');
 // const ClientIdentity = require('fabric-shim').ClientIdentity;
 
-const initialData = require('../data/initialData.json');
+const utils = require('./utils');
+
+const initialModelData = require('../data/initialModelData.json');
+const initialLoanData = require('../data/initialLoanData.json');
 
 class Liken extends Contract {
 
@@ -9,11 +12,11 @@ class Liken extends Contract {
         super();
         this.nextClientId = 1;
         this.nextFiId = 1;
-        this.nextMLModelId = 1;
+        this.nextModelId = 1;
+        this.nextLoanId = 1;
     }
 
     /**
-     *
      * @param {Context} ctx
      * @dev initiate ledger storing initial data
      */
@@ -22,13 +25,13 @@ class Liken extends Contract {
         // const clients = initialClientData;
         // const fis = initialFIData;
 
-        for (const data of initialData) {
-            const newModelId = 'MODEL' + this.nextMLModelId;
+        for (const data of initialModelData) {
+            const newModelId = 'MODEL' + this.nextModelId;
             // const whoRegistered = client.whoRegistered.ledgerUser;
 
             await ctx.stub.putState(newModelId, Buffer.from(JSON.stringify(data)));
             console.info('Added <--> ', data);
-            this.nextMLModelId++;
+            this.nextModelId++;
 
             // Include who registered the client in the list of FI approved
             // const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [newClientId, whoRegistered]);
@@ -37,18 +40,24 @@ class Liken extends Contract {
             // await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
         }
 
-        // for (const fi of fis) {
-        //     fi.docType = 'fi';
-        //     await ctx.stub.putState('FI' + this.nextFiId, Buffer.from(JSON.stringify(fi)));
-        //     console.info('Added <--> ', fi);
-        //     this.nextFiId++;
-        // }
+        let newModel = initialModelData[0];
+        newModel.model = 'new model';
+        newModel.publicationDate = 'afnsdfds';
+        await ctx.stub.putState('MODEL1', Buffer.from(JSON.stringify(newModel)));
+
+        for (const data of initialLoanData) {
+            const newLoanId = 'LOAN' + this.nextLoanId;
+            // const whoRegistered = client.whoRegistered.ledgerUser;
+
+            await ctx.stub.putState(newLoanId, Buffer.from(JSON.stringify(data)));
+            console.info('Added <--> ', data);
+            this.nextLoanId++;
+        }
 
         console.info('============= END : Initialize Ledger ===========');
     }
 
     // /**
-    //  *
     //  * @private
     //  * @param {Context} ctx
     //  * @dev extracting the CA ID
@@ -62,23 +71,143 @@ class Liken extends Contract {
     // }
 
     // /**
-    //  *
     //  * @private
     //  * @param {Context} ctx
-    //  * @param {string} clientId
-    //  * @dev tell if the caller is who registered client parameter
-    //  * @returns {boolean} is who registered or not, return null if client does not exists or does not have data
+    //  * @param {string} modelKey
+    //  * @dev tell if the caller is the model owner
+    //  * @returns {boolean} is the owner or not, return null if model does not exists or does not have data
     //  */
-    // async isWhoRegistered(ctx, clientId) {
-    //     const clientAsBytes = await ctx.stub.getState(clientId);
-    //     if (!clientAsBytes || clientAsBytes.length === 0) {
+    // async isOwner(ctx, modelKey) {
+    //     const modelAsBytes = await ctx.stub.getState(modelKey);
+    //     if (!modelAsBytes || modelAsBytes.length === 0) {
     //         return null;
     //     }
-    //     const clientData = JSON.parse(clientAsBytes.toString());
+    //     const modelData = JSON.parse(modelAsBytes.toString());
     //     const callerId = this.getCallerId(ctx);
 
-    //     return clientData.whoRegistered.ledgerUser === callerId;
+    //     return modelData.owner === callerId;
     // }
+
+    /**
+     * @param {Context} ctx
+     * @param {object} modelData model object to be registered
+     * @dev register a new model
+     * @returns {string} new model ID
+     */
+    async registerModel(ctx, modelData) {
+        console.info('============= START : Register model ===========');
+
+        // modelData = JSON.parse(modelData);
+        const callerId = utils.getCallerId(ctx);
+
+        if (modelData.whoRegistered.ledgerUser !== callerId) {
+            return null;
+        }
+
+        const model = {
+            owner: callerId,
+            model: modelData,
+            publicationDate: new Date().toISOString(),
+            datasetIDs: [],
+            whoPublishedLast: callerId
+        };
+
+        const newId = 'MODEL' + this.nextModelId;
+        this.nextModelId++;
+
+        await ctx.stub.putState(newId, Buffer.from(JSON.stringify(model)));
+
+        // Include who registered the client in the list of FI approved
+        // const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [newId, callerId]);
+        // const fiClientIndexKey = await ctx.stub.createCompositeKey('fiId~clientId', [callerId, newId]);
+        // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
+        // await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
+
+        console.info('============= END : Register model ===========');
+
+        return newId;
+    }
+
+    /**
+     * @param {Context} ctx
+     * @param {string} modelKey
+     * @dev returns a model by its key
+     * @returns {object} model data as an object
+     */
+    async getModelData(ctx, modelKey) {
+
+        const modelAsBytes = await ctx.stub.getState(modelKey);
+        if (!modelAsBytes || modelAsBytes.length === 0) {
+            return null;
+        }
+
+        return modelAsBytes;
+    }
+
+    /**
+     * @param {Context} ctx
+     * @param {string} modelKey
+     * @param {string} user
+     * @dev approve user to update model
+     * @returns {boolean} return true if approved
+     */
+    async approve(ctx, modelKey, user) {
+        console.info('======== START : Approve user to update model ==========');
+
+        const res = await utils.isOwner(ctx, modelKey);
+
+        if (!res) {
+            return false;
+        }
+
+        // const clientFiIndexKey = await ctx.stub.createCompositeKey('modelKey~user', [modelKey, user]);
+        const userModelIndexKey = await ctx.stub.createCompositeKey('user~modelKey', [user, modelKey]);
+
+        // if (!clientFiIndexKey) {
+        //     throw new Error('Composite key: clientFiIndexKey is null');
+        // }
+
+        if (!userModelIndexKey) {
+            throw new Error('Composite key: userModelIndexKey is null');
+        }
+
+        // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
+        await ctx.stub.putState(userModelIndexKey, Buffer.from('\u0000'));
+        console.info('======== END : Approve user to update model =========');
+
+        return true;
+    }
+
+    /**
+     * @param {Context} ctx
+     * @param {string} modelKey
+     * @param {object} modelData
+     * @dev update model
+     * @returns {boolean} return true if updated
+     */
+    async updateModel(ctx, modelKey, modelData) {
+        console.info('======== START : Update model ==========');
+
+        const res = await utils.isAllowed(ctx, modelKey);
+
+        if (!res) {
+            return false;
+        }
+
+        const callerId = this.getCallerId(ctx);
+        const modelAsBytes = await ctx.stub.getState(modelKey);
+        let model = JSON.parse(modelAsBytes.toString());
+
+        model.model = modelData;
+        model.publicationDate = new Date().toISOString();
+        model.whoPublishedLast = callerId;
+
+        await ctx.stub.putState(modelKey, Buffer.from(JSON.stringify(model)));
+
+        console.info('======== END : Update model =========');
+
+        return true;
+    }
 
     // /**
     //  *
