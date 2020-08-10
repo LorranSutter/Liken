@@ -62,9 +62,7 @@ exports.isOwner = async (ctx, modelKey) => {
  * @returns {boolean} is allowed or not, return null if model does not exists or does not have data
  */
 exports.isAllowed = async (ctx, modelKey) => {
-    const res = await this.isOwner(ctx, modelKey);
-
-    if (res) {
+    if (await this.isOwner(ctx, modelKey)) {
         return true;
     }
 
@@ -73,4 +71,23 @@ exports.isAllowed = async (ctx, modelKey) => {
     const result = await getRelationsArray(ctx, relationResultsIterator);
 
     return result.includes(modelKey);
+};
+
+/**
+ * @private
+ * @param {object} conditionsData
+ * @dev check if conditions data has the required and valid fields
+ * @returns {boolean} is valid or not
+ */
+exports.isConditionsValid = async (conditionsData) => {
+
+    if (!conditionsData.terms ||
+        !conditionsData.conditions ||
+        !conditionsData.expirationDate) {
+        return false;
+    }
+
+    const date = new Date(conditionsData.expirationDate);
+
+    return date instanceof Date && !isNaN(date);
 };
