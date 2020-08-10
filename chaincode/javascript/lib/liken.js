@@ -191,7 +191,7 @@ class Liken extends Contract {
     async remove(ctx, modelKey, user) {
         console.info('======== START : Remove user for model data access ==========');
 
-        if (!utils.isOwner(ctx, modelKey)) {
+        if (!await utils.isOwner(ctx, modelKey)) {
             return false;
         }
 
