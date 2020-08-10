@@ -100,9 +100,9 @@ class Liken extends Contract {
         // modelData = JSON.parse(modelData);
         const callerId = utils.getCallerId(ctx);
 
-        if (modelData.whoRegistered.ledgerUser !== callerId) {
-            return null;
-        }
+        // if (modelData.whoRegistered.ledgerUser !== callerId) {
+        //     return null;
+        // }
 
         const model = {
             owner: callerId,
