@@ -2,6 +2,7 @@
     {
         "owner": "user1",
         "model": "1",
+        "modelDescription": "Model description 1",
         "publicationDate": "2020-08-06T18:25:43.511Z",
         "datasetIDs": ["1","2","3"],
         "whoPublishedLast": {
@@ -12,6 +13,7 @@
     {
         "owner": "user2",
         "model": "2",
+        "modelDescription": "Model description 2",
         "publicationDate": "2020-08-04T08:14:32.511Z",
         "datasetIDs": ["2","4","7"],
         "whoPublishedLast": {
@@ -22,6 +24,7 @@
     {
         "owner": "user2",
         "model": "3",
+        "modelDescription": "Model description 3",
         "publicationDate": "2020-08-01T13:56:33.511Z",
         "datasetIDs": ["5","8","9"],
         "whoPublishedLast": {
@@ -32,6 +35,7 @@
     {
         "owner": "user1",
         "model": "4",
+        "modelDescription": "Model description 4",
         "publicationDate": "2020-08-03T21:10:05.511Z",
         "datasetIDs": ["3","6","7"],
         "whoPublishedLast": {

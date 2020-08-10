@@ -40,53 +40,19 @@ class Liken extends Contract {
             // await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
         }
 
-        let newModel = initialModelData[0];
-        newModel.model = 'new model';
-        newModel.publicationDate = 'afnsdfds';
-        await ctx.stub.putState('MODEL1', Buffer.from(JSON.stringify(newModel)));
-
         for (const data of initialLoanData) {
-            const newLoanId = 'LOAN' + this.nextLoanId;
-            // const whoRegistered = client.whoRegistered.ledgerUser;
+            const userModelIndexKey = await ctx.stub.createCompositeKey('user~modelKey', [data.user, data.modelKey]);
 
-            await ctx.stub.putState(newLoanId, Buffer.from(JSON.stringify(data)));
+            if (!userModelIndexKey) {
+                throw new Error('Composite key: userModelIndexKey is null');
+            }
+
+            await ctx.stub.putState(userModelIndexKey, Buffer.from(JSON.stringify(data)));
             console.info('Added <--> ', data);
-            this.nextLoanId++;
         }
 
         console.info('============= END : Initialize Ledger ===========');
     }
-
-    // /**
-    //  * @private
-    //  * @param {Context} ctx
-    //  * @dev extracting the CA ID
-    //  * @returns {string} CA ID
-    //  */
-    // getCallerId(ctx) {
-    //     const cid = new ClientIdentity(ctx.stub);
-    //     const idString = cid.getID();
-    //     const idParams = idString.toString().split('::');
-    //     return idParams[1].split('CN=')[1];
-    // }
-
-    // /**
-    //  * @private
-    //  * @param {Context} ctx
-    //  * @param {string} modelKey
-    //  * @dev tell if the caller is the model owner
-    //  * @returns {boolean} is the owner or not, return null if model does not exists or does not have data
-    //  */
-    // async isOwner(ctx, modelKey) {
-    //     const modelAsBytes = await ctx.stub.getState(modelKey);
-    //     if (!modelAsBytes || modelAsBytes.length === 0) {
-    //         return null;
-    //     }
-    //     const modelData = JSON.parse(modelAsBytes.toString());
-    //     const callerId = this.getCallerId(ctx);
-
-    //     return modelData.owner === callerId;
-    // }
 
     /**
      * @param {Context} ctx
@@ -131,10 +97,35 @@ class Liken extends Contract {
     /**
      * @param {Context} ctx
      * @param {string} modelKey
-     * @dev returns a model by its key
+     * @dev returns only public data model by its key
      * @returns {object} model data as an object
      */
     async getModelData(ctx, modelKey) {
+        const modelAsBytes = await ctx.stub.getState(modelKey);
+        if (!modelAsBytes || modelAsBytes.length === 0) {
+            return null;
+        }
+
+        const modelData = JSON.parse(modelAsBytes);
+
+        // Returns only public information
+        delete modelData.model;
+
+        return modelData;
+    }
+
+    /**
+     * @param {Context} ctx
+     * @param {string} modelKey
+     * @dev returns a full model by its key
+     * @returns {object} model data as an object
+     */
+    async getFullModelData(ctx, modelKey) {
+
+        const res = utils.isAllowed(ctx, modelKey);
+        if (!res) {
+            return null;
+        }
 
         const modelAsBytes = await ctx.stub.getState(modelKey);
         if (!modelAsBytes || modelAsBytes.length === 0) {
@@ -148,17 +139,27 @@ class Liken extends Contract {
      * @param {Context} ctx
      * @param {string} modelKey
      * @param {string} user
-     * @dev approve user to update model
+     * @param {object} conditionsData
+     * @dev approve user to access model under terms and conditions
      * @returns {boolean} return true if approved
      */
-    async approve(ctx, modelKey, user) {
-        console.info('======== START : Approve user to update model ==========');
+    async approve(ctx, modelKey, user, conditionsData) {
+        console.info('======== START : Approve user to access model ==========');
 
-        const res = await utils.isOwner(ctx, modelKey);
-
-        if (!res) {
+        if (!await utils.isOwner(ctx, modelKey)) {
             return false;
         }
+
+        conditionsData = JSON.parse(conditionsData);
+        if (!utils.isConditionsValid(conditionsData)) {
+            return false;
+        }
+
+        conditionsData.modelKey = modelKey;
+        conditionsData.expirationDate = new Date(conditionsData.expirationDate).toISOString();
+
+        // await ctx.stub.putState('LOAN' + this.nextLoanId, Buffer.from(JSON.stringify(conditionsData)));
+        // this.nextLoanId++;
 
         // const clientFiIndexKey = await ctx.stub.createCompositeKey('modelKey~user', [modelKey, user]);
         const userModelIndexKey = await ctx.stub.createCompositeKey('user~modelKey', [user, modelKey]);
@@ -172,8 +173,35 @@ class Liken extends Contract {
         }
 
         // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-        await ctx.stub.putState(userModelIndexKey, Buffer.from('\u0000'));
-        console.info('======== END : Approve user to update model =========');
+        // await ctx.stub.putState(userModelIndexKey, Buffer.from('\u0000'));
+        await ctx.stub.putState(userModelIndexKey, Buffer.from(JSON.stringify(conditionsData)));
+        console.info('======== END : Approve user to access model =========');
+
+        return true;
+    }
+
+    /**
+     *
+     * @param {Context} ctx
+     * @param {string} modelKey
+     * @param {string} user
+     * @dev remove user access model approval
+     * @returns {boolean} return true if removed
+     */
+    async remove(ctx, modelKey, user) {
+        console.info('======== START : Remove user for model data access ==========');
+
+        if (!utils.isOwner(ctx, modelKey)) {
+            return false;
+        }
+
+        const userModelIterator = await ctx.stub.getStateByPartialCompositeKey('user~modelKey', [user, modelKey]);
+        const userModelResult = await userModelIterator.next();
+        if (userModelResult.value) {
+            await ctx.stub.deleteState(userModelResult.value.key);
+        }
+
+        console.info('======== END : Remove user for model data access =========');
 
         return true;
     }
@@ -208,169 +236,6 @@ class Liken extends Contract {
 
         return true;
     }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @param {object} clientData
-    //  * @dev create a new client
-    //  * @returns {string} new client ID
-    //  */
-    // async createClient(ctx, clientData) {
-    //     console.info('============= START : Create client ===========');
-
-    //     clientData = JSON.parse(clientData);
-    //     const callerId = this.getCallerId(ctx);
-
-    //     if (clientData.whoRegistered.ledgerUser !== callerId) {
-    //         return null;
-    //     }
-
-    //     const client = {
-    //         docType: 'client',
-    //         ...clientData
-    //     };
-
-    //     const newId = 'CLIENT' + this.nextClientId;
-    //     this.nextClientId++;
-
-    //     await ctx.stub.putState(newId, Buffer.from(JSON.stringify(client)));
-
-    //     // Include who registered the client in the list of FI approved
-    //     const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [newId, callerId]);
-    //     const fiClientIndexKey = await ctx.stub.createCompositeKey('fiId~clientId', [callerId, newId]);
-    //     await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-    //     await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
-
-    //     console.info('============= END : Create client ===========');
-
-    //     return newId;
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @param {string} clientId
-    //  * @param {Array} fields
-    //  * @dev get specified fields of client data when called by an FI
-    //  * @returns {object} client data as an object
-    //  */
-    // async getClientData(ctx, clientId, fields) {
-
-    //     const clientAsBytes = await ctx.stub.getState(clientId);
-    //     if (!clientAsBytes || clientAsBytes.length === 0) {
-    //         return null;
-    //     }
-
-    //     const clientData = JSON.parse(clientAsBytes.toString());
-    //     const callerId = this.getCallerId(ctx);
-
-    //     // Check caller is who registered
-    //     if (clientData.whoRegistered.ledgerUser !== callerId) {
-
-    //         // If caller is not who registered, check if caller is approved
-    //         const relations = await this.getRelationByFi(ctx, callerId);
-    //         if (!relations.includes(clientId)) {
-    //             return null;
-    //         }
-    //     }
-
-    //     // Get only requested fields
-    //     fields = fields.split(',').map(field => field.trim());
-
-    //     let result = {};
-    //     for (const field of fields) {
-    //         if (clientData.hasOwnProperty(field)) {
-    //             result[field] = clientData[field];
-    //         }
-    //     }
-    //     return result;
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @dev get financial insitution data
-    //  * @returns {object} FI data as an object
-    //  */
-    // async getFinancialInstitutionData(ctx) {
-
-    //     const callerId = this.getCallerId(ctx);
-
-    //     const fiAsBytes = await ctx.stub.getState(callerId);
-    //     if (!fiAsBytes || fiAsBytes.length === 0) {
-    //         return null;
-    //     }
-
-    //     return fiAsBytes.toString();
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @param {string} clientId
-    //  * @param {string} fiId
-    //  * @dev approve FI to access client data
-    //  * @returns {boolean} return true if approved
-    //  */
-    // async approve(ctx, clientId, fiId) {
-    //     console.info('======== START : Approve financial institution for client data access ==========');
-
-    //     const res = await this.isWhoRegistered(ctx, clientId);
-
-    //     if (!res) {
-    //         return false;
-    //     }
-
-    //     const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [clientId, fiId]);
-    //     const fiClientIndexKey = await ctx.stub.createCompositeKey('fiId~clientId', [fiId, clientId]);
-
-    //     if (!clientFiIndexKey) {
-    //         throw new Error('Composite key: clientFiIndexKey is null');
-    //     }
-
-    //     if (!fiClientIndexKey) {
-    //         throw new Error('Composite key: fiClientIndexKey is null');
-    //     }
-
-    //     await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-    //     await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
-    //     console.info('======== END : Approve financial institution for client data access =========');
-
-    //     return true;
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @param {string} clientId
-    //  * @param {Array} fields
-    //  * @dev remove FI access data approval
-    //  * @returns {boolean} return true if removed
-    //  */
-    // async remove(ctx, clientId, fiId) {
-    //     console.info('======== START : Remove financial institution for client data access ==========');
-
-    //     if (!this.isWhoRegistered(ctx, clientId)) {
-    //         return false;
-    //     }
-
-    //     const clientFiIterator = await ctx.stub.getStateByPartialCompositeKey('clientId~fiId', [clientId, fiId]);
-    //     const clientFiResult = await clientFiIterator.next();
-    //     if (clientFiResult.value) {
-    //         await ctx.stub.deleteState(clientFiResult.value.key);
-    //     }
-
-    //     const fiClientIterator = await ctx.stub.getStateByPartialCompositeKey('fiId~clientId', [fiId, clientId]);
-    //     const fiClientResult = await fiClientIterator.next();
-    //     if (fiClientResult.value) {
-    //         await ctx.stub.deleteState(fiClientResult.value.key);
-    //     }
-
-    //     console.info('======== END : Remove financial institution for client data access =========');
-
-    //     return true;
-    // }
 
     // /**
     //  *
