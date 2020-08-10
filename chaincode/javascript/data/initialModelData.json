@@ -1,0 +1,42 @@
+[
+    {
+        "owner": "user1",
+        "model": "1",
+        "publicationDate": "2020-08-06T18:25:43.511Z",
+        "datasetIDs": ["1","2","3"],
+        "whoPublishedLast": {
+            "orgNum": 1,
+            "ledgerUser": "user1"
+        }
+    },
+    {
+        "owner": "user2",
+        "model": "2",
+        "publicationDate": "2020-08-04T08:14:32.511Z",
+        "datasetIDs": ["2","4","7"],
+        "whoPublishedLast": {
+            "orgNum": 2,
+            "ledgerUser": "user2"
+        }
+    },
+    {
+        "owner": "user2",
+        "model": "3",
+        "publicationDate": "2020-08-01T13:56:33.511Z",
+        "datasetIDs": ["5","8","9"],
+        "whoPublishedLast": {
+            "orgNum": 2,
+            "ledgerUser": "user2"
+        }
+    },
+    {
+        "owner": "user1",
+        "model": "4",
+        "publicationDate": "2020-08-03T21:10:05.511Z",
+        "datasetIDs": ["3","6","7"],
+        "whoPublishedLast": {
+            "orgNum": 1,
+            "ledgerUser": "user1"
+        }
+    }
+]
