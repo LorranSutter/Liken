@@ -1,14 +1,30 @@
 <div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596161929/Liken/Logo.svg' height=200/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597037735/Liken/Logo.svg' height=200/>
 
 </div>
+
+<br/>
+
+In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focus on the most relevant data in order to build a reliable environment.
+
+This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models.
+
+<!-- The ledger would act as an access management system storing the proofs and permission by which a business can access and use the user’s data. -->
 
 ## Architecture
 
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1596576288/Liken/Liken_architecture.png' height=700/>
+
+</div>
+
+## Flow Chart
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596751089/Liken/Liken_Flow_Chart.png' height=600/>
 
 </div>
 
@@ -20,7 +36,7 @@
 
 </div>
 
-# :book: Resources and Technologies :computer:
+# :book: Resources
 
 - [Notion](https://www.notion.so/) - easy to use workspace
 - [HLF SDK documentation](https://hyperledger.github.io/fabric-chaincode-node/release-1.4/api/index.html)
