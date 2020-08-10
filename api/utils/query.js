@@ -32,13 +32,14 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('eKYC');
+        const contract = network.getContract('Liken');
 
-        const fields = ['name', 'address'];
+        // const fields = ['name', 'address'];
 
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('getClientData', 'CLIENT1', fields);
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        let result = await contract.evaluateTransaction('getModelData', 'MODEL2');
+        result = Buffer.from(JSON.parse(result).data).toString();
+        console.log(`Transaction has been evaluated, result is: ${result}`);
 
         // Disconnect from the gateway.
         gateway.disconnect();

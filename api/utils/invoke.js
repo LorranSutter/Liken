@@ -32,10 +32,12 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('eKYC');
+        const contract = network.getContract('Liken');
 
         // Submit the specified transaction.
-        const result = await contract.submitTransaction('remove', 'CLIENT5', 'FI2');
+        // const result = await contract.submitTransaction('registerModel', 'new model cool');
+        const result = await contract.submitTransaction('updateModel', 'MODEL2', 'updated model');
+        // const result = await contract.submitTransaction('approve', 'MODEL2', 'updated model');
         console.log(result.toString());
         console.log('Transaction has been submitted');
 
