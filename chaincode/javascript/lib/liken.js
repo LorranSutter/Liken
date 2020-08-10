@@ -194,7 +194,7 @@ class Liken extends Contract {
             return false;
         }
 
-        const callerId = this.getCallerId(ctx);
+        const callerId = utils.getCallerId(ctx);
         const modelAsBytes = await ctx.stub.getState(modelKey);
         let model = JSON.parse(modelAsBytes.toString());
 
