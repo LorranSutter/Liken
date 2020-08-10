@@ -1,10 +1,10 @@
 <div align="center">
 
-<h2><i>Still under development...</i></h2>
+<h2><i>Under development...</i></h2>
 
 </div>
 
-<div align="center">
+<div align="center" id="intro">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597037735/Liken/Logo.svg' height=200/>
 
@@ -17,6 +17,16 @@ In the era where data is the new gold, organizations can have predictive advanta
 This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models.
 
 <!-- The ledger would act as an access management system storing the proofs and permission by which a business can access and use the user’s data. -->
+
+## Summary
+
+- [Intro](#intro)
+- [Architecture](#architecture)
+- [Flow Chart](#flow-chart)
+- [Sequence Diagram](#sequence-diagram)
+- [Resources](#book-resources)
+- [Technologies](#computer-technologies)
+<!-- - [How to run](#runner-how-to-run) -->
 
 ## Architecture
 
@@ -41,6 +51,162 @@ This project combines these two cutting edge technologies. Since huge datasets a
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1596147619/Liken/Liken_Sequence_Diagram.svg'/>
 
 </div>
+
+<!-- ## :runner: How to run
+
+This project was developed using a [Google Cloud Platform](https://cloud.google.com/) virtual machine, so every step must be performed in a VM CLI under a _sudo -s_ command.
+
+Start your VM and save the highlighted External IP:
+
+<p align="center">
+   <img src="https://res.cloudinary.com/lorransutter/image/upload/v1594076924/eKYC/VM.png"/>
+</p>
+
+You must have [Fabric samples](https://github.com/hyperledger/fabric-samples) to run this project. You will clone this project inside fabric-samples folder so as to this can use the files from bin and config folders.
+
+Here you can see the folder structure and the main files mentioned in this section:
+
+```
+📦fabric-samples
+ ┣ 📂bin
+ ┣ 📂config
+ ┗ 📂Liken
+   ┣ 📂api
+   ┣ 📂chaincode
+   ┣ 📂frontend
+      ┗ 📂src
+         ┗ 📂service
+            ┗ 📜baseURL.json
+   ┣ 📂test-network
+   ┣ 📜.env
+   ┣ 📜networkDown.sh
+   ┗ 📜setUp.sh
+```
+
+Open your terminal in the fabric-samples folder and clone the project.
+
+``` sh
+# Clone this repo
+git clone https://github.com/LorranSutter/Liken.git
+
+# Go to the project folder
+cd Liken
+```
+
+To run the application you will need to set your own configurations of _port_, _database_, _private key_ and _encryption key_. Create the following .env file in the indicated path and format with your customized configurations:
+
+``` json
+// ./.env
+
+PORT_API=5000
+PRIVATE_KEY="54AD766F231CCB0EA64156F1E5488"
+ENCRYPTION_KEY="CoCKidLqlVuB8y1EYmKaye1UGoxtHmko1LmyqOHvVht="
+MONGODB_URI_DEV="YOUR_DEV_MONGO_URI"
+```
+
+Now you will need two opened terminals to run the project. One for the API and another one for the frontend.
+
+API will run on http://35.193.245.108:5000/
+
+Frontend will run on http://35.193.245.108:3000/
+
+``` sh
+
+## In the first terminal ##
+
+# Go to the chaincode folder
+cd chaincode
+
+# Install dependencies
+npm install
+
+# Go to the API application
+cd ../api
+
+# Install dependencies
+npm install
+```
+
+``` sh
+## In the second terminal ##
+
+# Go to the frontend application
+cd frontend
+
+# Install dependencies
+npm install
+```
+
+In order to connect frontend to the API, you will have to provide the base URL of the API in the following file:
+
+```sh
+## In the second terminal ##
+
+# Go to the baseURL.json file
+cd src/service/baseURL.json
+
+{
+    "baseURL": "http://35.193.245.108:5000"
+}
+```
+
+Now you can start the network and perform all necessary set up running the following magic script:
+
+``` sh
+## In the first terminal ##
+
+# Go to the root
+cd ..
+
+# Run the set up script
+./setUp.sh
+```
+
+Run the API application:
+
+``` sh
+## In the first terminal ##
+
+# Go to the API application
+cd api
+
+# Run API application
+npm run start
+
+# Or to use nodemon
+npm run dev
+```
+
+Finally run the frontend application:
+
+``` sh
+## In the second terminal ##
+
+# Run the project
+npm start
+```
+
+If you want to stop the network and delete all artifacts created, just run the next magic script below:
+
+``` sh
+## In the first terminal ##
+
+# Go to the root
+cd ..
+
+# Run the script
+./networkDown.sh
+```
+
+#### Login credentials
+
+Client
+* login: user01 / user02 / JonasKahnwald / MarthaNielsen / ClaudiaTiedemann / ElisabethDoppler / H.G.Tannhaus
+* password: 123456
+
+Financial Institution
+* login: FI1 / FI2
+* password: 123456 -->
 
 # :book: Resources
 
