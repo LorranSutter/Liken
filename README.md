@@ -16,7 +16,7 @@ This project combines these two cutting edge technologies. Since huge datasets a
 
 <div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596576288/Liken/Liken_architecture.png' height=700/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596662592/Liken/Liken_architecture.png' height=700/>
 
 </div>
 
