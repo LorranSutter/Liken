@@ -46,7 +46,7 @@ This project combines these two cutting edge technologies. Since huge datasets a
 
 ## Sequence Diagram
 
-The following diagram represents the flow of this MPV. You can check the full sequence diagram [here](FullSolution.md).
+The following diagram represents the flow of this MPV. You can check the full sequence diagram [here](FullSolution.md#sequence-diagram).
 
 <div align="center">
 
