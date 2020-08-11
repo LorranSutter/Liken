@@ -21,36 +21,40 @@ This project combines these two cutting edge technologies. Since huge datasets a
 ## Summary
 
 - [Intro](#intro)
-- [Architecture](#architecture)
 - [Flow Chart](#flow-chart)
 - [Sequence Diagram](#sequence-diagram)
 - [Resources](#book-resources)
 - [Technologies](#computer-technologies)
+<!-- - [Architecture](#architecture) -->
 <!-- - [How to run](#runner-how-to-run) -->
 
-## Architecture
+<!-- ## Architecture
 
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1596662592/Liken/Liken_architecture.png' height=600/>
 
-</div>
+</div> -->
 
 ## Flow Chart
 
 <div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596751089/Liken/Liken_Flow_Chart.png' width=800/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597108351/Liken/Liken_Flow_Chart_v2.png' width=800/>
 
 </div>
 
 ## Sequence Diagram
 
+The following diagram represents the flow of this MPV. You can check the full sequence diagram [here]('https://res.cloudinary.com/lorransutter/image/upload/v1597129438/Liken/Liken_Sequence_Diagram_Full.svg').
+
 <div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596147619/Liken/Liken_Sequence_Diagram.svg'/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597129372/Liken/Liken_Sequence_Diagram_MVP.svg'/>
 
 </div>
+
+<!-- <a href='https://res.cloudinary.com/lorransutter/image/upload/v1597129438/Liken/Liken_Sequence_Diagram_Full.svg'></a> -->
 
 <!-- ## :runner: How to run
 
