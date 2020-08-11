@@ -38,6 +38,8 @@ This project combines these two cutting edge technologies. Since huge datasets a
 
 ## Flow Chart
 
+The following chart represents the flow of this MPV. You can check the full flow chart [here](FullSolution.md#flow-chart).
+
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597108351/Liken/Liken_Flow_Chart_v2.png' width=800/>
