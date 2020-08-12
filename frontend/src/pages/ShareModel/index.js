@@ -13,6 +13,7 @@ const NewModel = () => {
     const history = useHistory();
 
     const [validated, setValidated] = useState(false);
+    const [organization, setOrganization] = useState('');
     const [terms, setTerms] = useState('');
     const [conditions, setConditions] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
@@ -24,6 +25,7 @@ const NewModel = () => {
     const validateForm = useCallback(
         () => {
             if (
+                organization && organization.length > 0 &&
                 terms && terms.length > 10 &&
                 conditions && conditions.length > 10 &&
                 expirationDate && expirationDate.length > 0 &&
@@ -36,7 +38,7 @@ const NewModel = () => {
                 setSubmitDisabled(true);
             }
         },
-        [terms, conditions, expirationDate, isLoading]
+        [organization, terms, conditions, expirationDate, isLoading]
     );
 
     useEffect(() => {
@@ -99,6 +101,17 @@ const NewModel = () => {
                 <Form onSubmit={handleSubmit}>
                     <Card mb={20}>
                         <Flex mx={-3} flexWrap={"wrap"}>
+                            <Box width={1} px={3}>
+                                <Field label="Organization" width={1}>
+                                    <Form.Input
+                                        type="text"
+                                        required
+                                        onChange={(e) => setOrganization(e.target.value)}
+                                        value={organization}
+                                        width={1}
+                                    />
+                                </Field>
+                            </Box>
                             <Box width={1} px={3}>
                                 <Field label="Terms" width={1}>
                                     <textarea
