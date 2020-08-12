@@ -163,24 +163,25 @@ class Liken extends Contract {
      * @param {Context} ctx
      * @param {string} modelKey
      * @param {string} user
-     * @param {object} conditionsData
+     * @param {object} detailsData
      * @dev approve user to access model under terms and conditions
      * @returns {boolean} return true if approved
      */
-    async approve(ctx, modelKey, user, conditionsData) {
+    async approve(ctx, modelKey, user, detailsData) {
         console.info('======== START : Approve user to access model ==========');
 
         if (!await utils.isOwner(ctx, modelKey)) {
             return false;
         }
 
-        conditionsData = JSON.parse(conditionsData);
-        if (!utils.isConditionsValid(conditionsData)) {
+        detailsData = JSON.parse(detailsData);
+        if (!utils.isDetailsValid(detailsData)) {
             return false;
         }
 
-        conditionsData.modelKey = modelKey;
-        conditionsData.expirationDate = new Date(conditionsData.expirationDate).toISOString();
+        detailsData.modelKey = modelKey;
+        detailsData.publicationDate = new Date().toISOString();
+        detailsData.expirationDate = new Date(detailsData.expirationDate).toISOString();
 
         const userModelIndexKey = await ctx.stub.createCompositeKey('user~modelKey', [user, modelKey]);
 
@@ -188,7 +189,7 @@ class Liken extends Contract {
             throw new Error('Composite key: userModelIndexKey is null');
         }
 
-        await ctx.stub.putState(userModelIndexKey, Buffer.from(JSON.stringify(conditionsData)));
+        await ctx.stub.putState(userModelIndexKey, Buffer.from(JSON.stringify(detailsData)));
         console.info('======== END : Approve user to access model =========');
 
         return true;

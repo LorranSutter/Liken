@@ -1,22 +1,22 @@
 [
     {
         "modelKey": "MODEL1",
-        "terms": "Many terms 1",
-        "conditions": "Many conditions 1",
+        "terms": "This Agreement shall become effective as of the date of its execution and shall continue in effect for a period of two years from the date of execution.",
+        "conditions": "As a condition to the effectiveness of this Agreement, Management Contractor shall execute and deliver to Port the “Nondiscrimination in Contracts and Benefits” form approved by the San Francisco Human Rights Commission.",
         "expirationDate": "2021-08-04T08:14:32.511Z",
         "user": "apple"
     },
     {
         "modelKey": "MODEL2",
-        "terms": "Many terms 2",
-        "conditions": "Many conditions 2",
+        "terms": "The term of this Agreement shall begin on the date first above written, and unless sooner terminated as hereinafter provided, this Agreement shall remain in effect through June 30, 2022.",
+        "conditions": "The Security Reserve shall remain in place until the later of the termination of this Agreement or the performance of all financial obligations of the company arising under this Agreement.",
         "expirationDate": "2022-06-30T08:14:32.511Z",
         "user": "microsoft"
     },
     {
         "modelKey": "MODEL3",
-        "terms": "Many terms 3",
-        "conditions": "Many conditions 3",
+        "terms": "This Agreement and the Security Interests shall terminate on the date on which all payments under the Debentures have been indefeasibly paid in full and all other Obligations have been paid or discharged.",
+        "conditions": "The terms and provisions of this Agreement are expressly conditioned upon, and subject to, the closing of the IPO Transactions.",
         "expirationDate": "2020-12-30T08:14:32.511Z",
         "user": "microsoft"
     }

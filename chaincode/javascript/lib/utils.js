@@ -75,19 +75,19 @@ exports.isAllowed = async (ctx, modelKey) => {
 
 /**
  * @private
- * @param {object} conditionsData
+ * @param {object} detailsData
  * @dev check if conditions data has the required and valid fields
  * @returns {boolean} is valid or not
  */
-exports.isConditionsValid = async (conditionsData) => {
+exports.isDetailsValid = async (detailsData) => {
 
-    if (!conditionsData.terms ||
-        !conditionsData.conditions ||
-        !conditionsData.expirationDate) {
+    if (!detailsData.terms ||
+        !detailsData.conditions ||
+        !detailsData.expirationDate) {
         return false;
     }
 
-    const date = new Date(conditionsData.expirationDate);
+    const date = new Date(detailsData.expirationDate);
 
     return date instanceof Date && !isNaN(date);
 };
