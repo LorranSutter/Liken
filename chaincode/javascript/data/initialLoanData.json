@@ -4,20 +4,20 @@
         "terms": "Many terms 1",
         "conditions": "Many conditions 1",
         "expirationDate": "2021-08-04T08:14:32.511Z",
-        "user": "user2"
+        "user": "apple"
     },
     {
         "modelKey": "MODEL2",
         "terms": "Many terms 2",
         "conditions": "Many conditions 2",
         "expirationDate": "2022-06-30T08:14:32.511Z",
-        "user": "user1"
+        "user": "microsoft"
     },
     {
         "modelKey": "MODEL3",
         "terms": "Many terms 3",
         "conditions": "Many conditions 3",
         "expirationDate": "2020-12-30T08:14:32.511Z",
-        "user": "user1"
+        "user": "microsoft"
     }
 ]
