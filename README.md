@@ -62,3 +62,7 @@
     - [React-cookie](https://www.npmjs.com/package/react-cookie) - cookie interaction for React applications
     <!-- - [React dropzone](https://react-dropzone.js.org/) - create zone to drop files -->
     - [Axios](https://www.npmjs.com/package/axios) - HTTP requests
+
+## :cookie: Credits
+
+- [Encryption/Decryption code using cipher](https://github.com/zishon89us/node-cheat/blob/master/stackoverflow_answers/crypto-create-cipheriv.js#L2)
