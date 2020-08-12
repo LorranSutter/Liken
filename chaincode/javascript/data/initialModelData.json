@@ -1,46 +1,46 @@
 [
     {
-        "owner": "user1",
+        "owner": "microsoft",
         "model": "1",
         "modelDescription": "Model description 1",
         "publicationDate": "2020-08-06T18:25:43.511Z",
         "datasetIDs": ["1","2","3"],
         "whoPublishedLast": {
             "orgNum": 1,
-            "ledgerUser": "user1"
+            "ledgerUser": "microsoft"
         }
     },
     {
-        "owner": "user2",
+        "owner": "apple",
         "model": "2",
         "modelDescription": "Model description 2",
         "publicationDate": "2020-08-04T08:14:32.511Z",
         "datasetIDs": ["2","4","7"],
         "whoPublishedLast": {
             "orgNum": 2,
-            "ledgerUser": "user2"
+            "ledgerUser": "apple"
         }
     },
     {
-        "owner": "user2",
+        "owner": "apple",
         "model": "3",
         "modelDescription": "Model description 3",
         "publicationDate": "2020-08-01T13:56:33.511Z",
         "datasetIDs": ["5","8","9"],
         "whoPublishedLast": {
             "orgNum": 2,
-            "ledgerUser": "user2"
+            "ledgerUser": "apple"
         }
     },
     {
-        "owner": "user1",
+        "owner": "microsoft",
         "model": "4",
         "modelDescription": "Model description 4",
         "publicationDate": "2020-08-03T21:10:05.511Z",
         "datasetIDs": ["3","6","7"],
         "whoPublishedLast": {
             "orgNum": 1,
-            "ledgerUser": "user1"
+            "ledgerUser": "microsoft"
         }
     }
 ]

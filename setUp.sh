@@ -19,7 +19,11 @@ popd
 pushd ./api/utils
 node enrollAdmin.js 1 admin1
 node enrollAdmin.js 2 admin2
-node registerUser.js 1 admin1 user1
-node registerUser.js 2 admin2 user2
+node registerUser.js 1 admin1 microsoft
+node registerUser.js 2 admin2 apple
+# node invoke.js 2 apple
+# node invoke.js 1 microsoft
+# node query.js 1 microsoft
+node query.js 2 apple
 # node populate.js 1 FI1
 popd

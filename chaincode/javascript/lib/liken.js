@@ -1,5 +1,4 @@
 const { Contract } = require('fabric-contract-api');
-// const ClientIdentity = require('fabric-shim').ClientIdentity;
 
 const utils = require('./utils');
 
@@ -10,8 +9,6 @@ class Liken extends Contract {
 
     constructor() {
         super();
-        this.nextClientId = 1;
-        this.nextFiId = 1;
         this.nextModelId = 1;
         this.nextLoanId = 1;
     }
@@ -22,22 +19,25 @@ class Liken extends Contract {
      */
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
-        // const clients = initialClientData;
-        // const fis = initialFIData;
+
+        const modelOwnerRelation = {};
 
         for (const data of initialModelData) {
             const newModelId = 'MODEL' + this.nextModelId;
-            // const whoRegistered = client.whoRegistered.ledgerUser;
 
             await ctx.stub.putState(newModelId, Buffer.from(JSON.stringify(data)));
             console.info('Added <--> ', data);
             this.nextModelId++;
 
-            // Include who registered the client in the list of FI approved
-            // const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [newClientId, whoRegistered]);
-            // const fiClientIndexKey = await ctx.stub.createCompositeKey('fiId~clientId', [whoRegistered, newClientId]);
-            // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-            // await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
+            if (!modelOwnerRelation.hasOwnProperty(data.owner)) {
+                modelOwnerRelation[data.owner] = [];
+            }
+            modelOwnerRelation[data.owner].push(newModelId);
+        }
+
+        for (const owner of Object.keys(modelOwnerRelation)) {
+            const models = modelOwnerRelation[owner];
+            await ctx.stub.putState(owner, Buffer.from(JSON.stringify(models)));
         }
 
         for (const data of initialLoanData) {
@@ -63,12 +63,7 @@ class Liken extends Contract {
     async registerModel(ctx, modelData) {
         console.info('============= START : Register model ===========');
 
-        // modelData = JSON.parse(modelData);
         const callerId = utils.getCallerId(ctx);
-
-        // if (modelData.whoRegistered.ledgerUser !== callerId) {
-        //     return null;
-        // }
 
         const model = {
             owner: callerId,
@@ -83,11 +78,16 @@ class Liken extends Contract {
 
         await ctx.stub.putState(newId, Buffer.from(JSON.stringify(model)));
 
-        // Include who registered the client in the list of FI approved
-        // const clientFiIndexKey = await ctx.stub.createCompositeKey('clientId~fiId', [newId, callerId]);
-        // const fiClientIndexKey = await ctx.stub.createCompositeKey('fiId~clientId', [callerId, newId]);
-        // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-        // await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
+        const modelsListByOwnerAsBytes = await ctx.stub.getState(callerId);
+        if (!modelsListByOwnerAsBytes || modelsListByOwnerAsBytes.length === 0) {
+            await ctx.stub.putState(callerId, Buffer.from(JSON.stringify([newId])));
+        } else {
+            const modelsListByOwner = JSON.parse(modelsListByOwnerAsBytes);
+            if (!modelsListByOwner.includes(newId)) {
+                modelsListByOwner.push(newId);
+                await ctx.stub.putState(callerId, Buffer.from(JSON.stringify(modelsListByOwner)));
+            }
+        }
 
         console.info('============= END : Register model ===========');
 
@@ -137,6 +137,30 @@ class Liken extends Contract {
 
     /**
      * @param {Context} ctx
+     * @dev get a list of models stored in the ledger owned by caller
+     * @returns {Array} array of models
+     */
+    async queryAllModelsByUser(ctx) {
+        console.info('====================== START : Querying all models owned by caller ======================');
+
+        const callerId = utils.getCallerId(ctx);
+        const modelKeyList = await ctx.stub.getState(callerId);
+        if (!modelKeyList || modelKeyList.length === 0) {
+            return null;
+        }
+        const allResults = [];
+        for (const modelKey of JSON.parse(modelKeyList)) {
+            const model = await ctx.stub.getState(modelKey);
+            allResults.push(model);
+        }
+
+        console.info('====================== END : Querying all models owned by caller ======================');
+
+        return allResults;
+    }
+
+    /**
+     * @param {Context} ctx
      * @param {string} modelKey
      * @param {string} user
      * @param {object} conditionsData
@@ -158,22 +182,12 @@ class Liken extends Contract {
         conditionsData.modelKey = modelKey;
         conditionsData.expirationDate = new Date(conditionsData.expirationDate).toISOString();
 
-        // await ctx.stub.putState('LOAN' + this.nextLoanId, Buffer.from(JSON.stringify(conditionsData)));
-        // this.nextLoanId++;
-
-        // const clientFiIndexKey = await ctx.stub.createCompositeKey('modelKey~user', [modelKey, user]);
         const userModelIndexKey = await ctx.stub.createCompositeKey('user~modelKey', [user, modelKey]);
-
-        // if (!clientFiIndexKey) {
-        //     throw new Error('Composite key: clientFiIndexKey is null');
-        // }
 
         if (!userModelIndexKey) {
             throw new Error('Composite key: userModelIndexKey is null');
         }
 
-        // await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
-        // await ctx.stub.putState(userModelIndexKey, Buffer.from('\u0000'));
         await ctx.stub.putState(userModelIndexKey, Buffer.from(JSON.stringify(conditionsData)));
         console.info('======== END : Approve user to access model =========');
 
@@ -236,88 +250,6 @@ class Liken extends Contract {
 
         return true;
     }
-
-    // /**
-    //  *
-    //  * @private
-    //  * @param {Context} ctx
-    //  * @param {Iterator} relationResultsIterator
-    //  * @dev iterate a composite key iterator
-    //  * @returns {Array} list of results of the iteration
-    //  */
-    // async getRelationsArray(ctx, relationResultsIterator) {
-    //     let relationsArray = [];
-    //     while (true) {
-
-    //         const responseRange = await relationResultsIterator.next();
-
-    //         if (!responseRange || !responseRange.value) {
-    //             return JSON.stringify(relationsArray);
-    //         }
-
-    //         const { attributes } = await ctx.stub.splitCompositeKey(responseRange.value.key);
-
-    //         relationsArray.push(attributes[1]);
-    //     }
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @param {string} clientId
-    //  * @dev get a list of approved FIs
-    //  * @returns {Array} list of approved FIs
-    //  */
-    // async getRelationByClient(ctx, clientId) {
-    //     if (!this.isWhoRegistered(ctx, clientId)) {
-    //         return null;
-    //     }
-
-    //     const relationResultsIterator = await ctx.stub.getStateByPartialCompositeKey('clientId~fiId', [clientId]);
-    //     const result = await this.getRelationsArray(ctx, relationResultsIterator);
-
-    //     return result;
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @dev get a list of clients who approved the caller FI
-    //  * @returns {Array} list of clients who approved FI
-    //  */
-    // async getRelationByFi(ctx) {
-    //     const callerID = this.getCallerId(ctx);
-
-    //     const relationResultsIterator = await ctx.stub.getStateByPartialCompositeKey('fiId~clientId', [callerID]);
-    //     const result = await this.getRelationsArray(ctx, relationResultsIterator);
-
-    //     return result;
-    // }
-
-    // /**
-    //  *
-    //  * @param {Context} ctx
-    //  * @dev get a list of all data stored in the ledger
-    //  * @returns {Array} array of data of the ledger
-    //  */
-    // async queryAllData(ctx) {
-    //     const startKey = '';
-    //     const endKey = '';
-    //     const allResults = [];
-    //     for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-    //         const strValue = Buffer.from(value).toString('utf8');
-    //         let record;
-    //         try {
-    //             record = JSON.parse(strValue);
-    //         } catch (err) {
-    //             console.info(err);
-    //             record = strValue;
-    //         }
-    //         allResults.push({ Key: key, Record: record });
-    //     }
-    //     console.info(allResults);
-    //     return JSON.stringify(allResults);
-    // }
 }
 
 module.exports = Liken;
