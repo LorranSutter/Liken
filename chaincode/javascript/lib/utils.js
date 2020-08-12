@@ -26,6 +26,18 @@ async function getRelationsArray(ctx, relationResultsIterator) {
 /**
  * @private
  * @param {Context} ctx
+ * @dev get a list of models approved for caller
+ * @returns {Array} list of approved models
+ */
+exports.getModelsByCaller = async (ctx) => {
+    const callerId = this.getCallerId(ctx);
+    const relationResultsIterator = await ctx.stub.getStateByPartialCompositeKey('user~modelKey', [callerId]);
+    return await getRelationsArray(ctx, relationResultsIterator);
+};
+
+/**
+ * @private
+ * @param {Context} ctx
  * @dev extracting the CA ID
  * @returns {string} CA ID
  */
@@ -66,9 +78,7 @@ exports.isAllowed = async (ctx, modelKey) => {
         return true;
     }
 
-    const callerId = this.getCallerId(ctx);
-    const relationResultsIterator = await ctx.stub.getStateByPartialCompositeKey('user~modelKey', [callerId]);
-    const result = await getRelationsArray(ctx, relationResultsIterator);
+    const result = await this.getModelsByCaller(ctx);
 
     return result.includes(modelKey);
 };
