@@ -1,46 +1,34 @@
 [
     {
         "owner": "microsoft",
-        "model": "1",
-        "modelDescription": "Model description 1",
+        "modelObject": "1",
+        "modelName": "Deep Learning for Multiclass Text Classification",
+        "modelDescription": "Cleaning of special characters and removing punctuation; cleaning numbers; removing of contractions; tokenization; label encoding; text CNN; LSTM/GRU; confusion matrix.",
         "publicationDate": "2020-08-06T18:25:43.511Z",
-        "datasetIDs": ["1","2","3"],
-        "whoPublishedLast": {
-            "orgNum": 1,
-            "ledgerUser": "microsoft"
-        }
+        "whoPublishedLast": "microsoft"
     },
     {
         "owner": "apple",
-        "model": "2",
-        "modelDescription": "Model description 2",
+        "modelObject": "2",
+        "modelName": "Machine Learning Image Classification With TensorFlow",
+        "modelDescription": "Image classification; perceptron; MLP; clothes, dresses, shoes, sandals and bags classification; 2D visualization.",
         "publicationDate": "2020-08-04T08:14:32.511Z",
-        "datasetIDs": ["2","4","7"],
-        "whoPublishedLast": {
-            "orgNum": 2,
-            "ledgerUser": "apple"
-        }
+        "whoPublishedLast": "apple"
     },
     {
         "owner": "apple",
-        "model": "3",
-        "modelDescription": "Model description 3",
+        "modelObject": "3",
+        "modelName": "Machine Learning model for Stock Trend Prediction",
+        "modelDescription": "Extremely randomized forest classification; K-Means clusterization; Support Vector Machines multi-class; K-fold cross validation.",
         "publicationDate": "2020-08-01T13:56:33.511Z",
-        "datasetIDs": ["5","8","9"],
-        "whoPublishedLast": {
-            "orgNum": 2,
-            "ledgerUser": "apple"
-        }
+        "whoPublishedLast": "apple"
     },
     {
         "owner": "microsoft",
-        "model": "4",
-        "modelDescription": "Model description 4",
+        "modelObject": "4",
+        "modelName": "Sentiment analysis for text with Deep Learning",
+        "modelDescription": "Web scrapping for data acquisition; Embeddings generation; LSTM; NLTK; cross-entropy loss",
         "publicationDate": "2020-08-03T21:10:05.511Z",
-        "datasetIDs": ["3","6","7"],
-        "whoPublishedLast": {
-            "orgNum": 1,
-            "ledgerUser": "microsoft"
-        }
+        "whoPublishedLast": "microsoft"
     }
 ]
