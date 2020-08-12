@@ -5,8 +5,9 @@ import { theme } from "rimble-ui";
 import { ThemeProvider } from "styled-components";
 
 import Login from './pages/Login';
-import Client from './pages/Client';
-// import NewClient from './pages/NewClient';
+import Org from './pages/Org';
+import NewModel from './pages/NewModel';
+import ShareModel from './pages/ShareModel';
 
 const customTheme = {
   ...theme
@@ -23,8 +24,9 @@ function App() {
           <Route path='/' exact component={Login} />
           <Route path='/index' exact component={Login} />
           <Route path='/login' exact component={Login} />
-          <Route path='/client' exact component={Client} />
-          {/* <Route path='/fi/newClient' exact component={NewClient} /> */}
+          <Route path='/org' exact component={Org} />
+          <Route path='/org/models/new' exact component={NewModel} />
+          <Route path='/org/models/share' exact component={ShareModel} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

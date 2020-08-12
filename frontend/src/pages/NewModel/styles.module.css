@@ -1,0 +1,17 @@
+.rimbleTextarea {
+	resize: "vertical";
+	box-sizing: "border-box";
+	width: "100%";
+	line-height: "1.5";
+	height: "auto";
+	color: "#3F3D4B";
+	background-color: "#fff";
+	font-size: "1rem";
+	padding: "16px";
+	border: "1px solid transparent";
+	border-color: "#ccc";
+	border-radius: "4px";
+	box-shadow: "0px 2px 4px rgba(0,0,0,0.1)";
+	font: "400 16px Arial";
+	outline: "none";
+}
