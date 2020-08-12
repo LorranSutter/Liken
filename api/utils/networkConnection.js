@@ -40,7 +40,7 @@ exports.evaluateTransaction = async (transaction, orgNumber, userName, params = 
     const network = await gateway.getNetwork('mychannel');
 
     // Get the contract from the network.
-    const contract = network.getContract('eKYC');
+    const contract = network.getContract('Liken');
     const result =
         params ?
             await contract.evaluateTransaction(transaction, ...params) :
@@ -59,7 +59,7 @@ exports.submitTransaction = async (transaction, orgNumber, userName, params = nu
     const network = await gateway.getNetwork('mychannel');
 
     // Get the contract from the network.
-    const contract = network.getContract('eKYC');
+    const contract = network.getContract('Liken');
     const result =
         params ?
             await contract.submitTransaction(transaction, ...params) :
