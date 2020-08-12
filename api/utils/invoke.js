@@ -43,9 +43,9 @@ async function main() {
         // Submit the specified transaction.
         // const result = await contract.submitTransaction('registerModel', 'new model cool');
         // FOR SOME REASON IT MAY OR MAY NOT FAIL WHEN UPDATE SOMETHING WITH THE SAME MODEL
-        // const result = await contract.submitTransaction('updateModel', 'MODEL2', 'updated model by user3');
-        // const result = await contract.submitTransaction('approve', 'MODEL2', 'user3', JSON.stringify(conditionsData));
-        const result = await contract.submitTransaction('remove', 'MODEL1', 'user3');
+        const result = await contract.submitTransaction('updateModel', 'MODEL4', 'updated model by apple');
+        // const result = await contract.submitTransaction('approve', 'MODEL4', 'apple', JSON.stringify(conditionsData));
+        // const result = await contract.submitTransaction('remove', 'MODEL1', 'apple');
         console.log(result.toString());
         console.log('Transaction has been submitted');
 

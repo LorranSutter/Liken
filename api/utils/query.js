@@ -38,10 +38,14 @@ async function main() {
 
         // Evaluate the specified transaction.
         // let result = await contract.evaluateTransaction('getModelData', 'MODEL2');
-        let result = await contract.evaluateTransaction('getFullModelData', 'MODEL2');
+        // let result = await contract.evaluateTransaction('getFullModelData', 'MODEL2');
+        let result = await contract.evaluateTransaction('queryAllModelsByUser');
         // result = result.toString();
-        result = Buffer.from(JSON.parse(result).data).toString();
-        console.log(`Transaction has been evaluated, result is: ${result}`);
+        JSON.parse(result.toString()).map(model => {
+            console.log(Buffer.from(model.data).toString());
+        });
+        // result = Buffer.from(JSON.parse(result).data).toString();
+        // console.log(`Transaction has been evaluated, result is: ${result}`);
 
         // Disconnect from the gateway.
         gateway.disconnect();
