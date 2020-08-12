@@ -99,7 +99,7 @@ git clone https://github.com/LorranSutter/Liken.git
 cd Liken
 ```
 
-To run the application you will need to set your own configurations of _port_, _database_, _private key_ and _encryption key_. Create the following .env file in the indicated path and format with your customized configurations:
+To run the application you will need to set your own configurations of _port_, _database_, _private key_ and _encryption key_. Create the following .env file in the indicated path and format with your customized configurations. You can use .env.sample and rename it to .env:
 
 ``` json
 // ./.env
@@ -107,7 +107,7 @@ To run the application you will need to set your own configurations of _port_, _
 PORT_API=5000
 PRIVATE_KEY="54AD766F231CCB0EA64156F1E5488"
 ENCRYPTION_KEY="CoCKidLqlVuB8y1EYmKaye1UGoxtHmko1LmyqOHvVht="
-MONGODB_URI_DEV="YOUR_DEV_MONGO_URI"
+MONGODB_URI_DEV="YOUR_MONGO_URI"
 ```
 
 Now you will need two opened terminals to run the project. One for the API and another one for the frontend.
