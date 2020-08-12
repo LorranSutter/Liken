@@ -7,8 +7,7 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
-const clientRouter = require('./routes/client');
-const financialInstitutionRouter = require('./routes/financialInstitution');
+const orgRouter = require('./routes/org');
 
 const app = express();
 
@@ -25,8 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/client', clientRouter);
-app.use('/fi', financialInstitutionRouter);
+app.use('/org', orgRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

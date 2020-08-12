@@ -38,11 +38,12 @@ async function main() {
 
         // Evaluate the specified transaction.
         // let result = await contract.evaluateTransaction('getModelData', 'MODEL2');
-        // let result = await contract.evaluateTransaction('getFullModelData', 'MODEL2');
-        let result = await contract.evaluateTransaction('queryAllModelsByUser');
-        // result = result.toString();
+        let result = await contract.evaluateTransaction('getFullModelData', 'MODEL4');
+        // let result = await contract.evaluateTransaction('queryAllModelsByApprovedUser');
+        // let result = await contract.evaluateTransaction('queryAllModelsByOwner');
+        console.log(result.toString());
         JSON.parse(result.toString()).map(model => {
-            console.log(Buffer.from(model.data).toString());
+            console.log(model);
         });
         // result = Buffer.from(JSON.parse(result).data).toString();
         // console.log(`Transaction has been evaluated, result is: ${result}`);
