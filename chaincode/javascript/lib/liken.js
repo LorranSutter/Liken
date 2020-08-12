@@ -109,7 +109,7 @@ class Liken extends Contract {
         const modelData = JSON.parse(modelAsBytes);
 
         // Returns only public information
-        delete modelData.model;
+        delete modelData.modelObject;
 
         return modelData;
     }
@@ -122,8 +122,7 @@ class Liken extends Contract {
      */
     async getFullModelData(ctx, modelKey) {
 
-        const res = utils.isAllowed(ctx, modelKey);
-        if (!res) {
+        if (!await utils.isAllowed(ctx, modelKey)) {
             return null;
         }
 
@@ -132,7 +131,7 @@ class Liken extends Contract {
             return null;
         }
 
-        return modelAsBytes;
+        return JSON.parse(modelAsBytes);
     }
 
     /**
@@ -140,7 +139,7 @@ class Liken extends Contract {
      * @dev get a list of models stored in the ledger owned by caller
      * @returns {Array} array of models
      */
-    async queryAllModelsByUser(ctx) {
+    async queryAllModelsByOwner(ctx) {
         console.info('====================== START : Querying all models owned by caller ======================');
 
         const callerId = utils.getCallerId(ctx);
@@ -151,10 +150,33 @@ class Liken extends Contract {
         const allResults = [];
         for (const modelKey of JSON.parse(modelKeyList)) {
             const model = await ctx.stub.getState(modelKey);
-            allResults.push(model);
+            allResults.push({ key: modelKey, modelData: JSON.parse(model) });
         }
 
         console.info('====================== END : Querying all models owned by caller ======================');
+
+        return allResults;
+    }
+
+    /**
+     * @param {Context} ctx
+     * @dev get a list of models stored in the ledger approved for caller
+     * @returns {Array} array of models
+     */
+    async queryAllModelsByApprovedUser(ctx) {
+        console.info('====================== START : Querying all models approved for caller ======================');
+
+        const modelKeyList = await utils.getModelsByCaller(ctx);
+        if (!modelKeyList || modelKeyList.length === 0) {
+            return null;
+        }
+        const allResults = [];
+        for (const modelKey of JSON.parse(modelKeyList)) {
+            const model = await ctx.stub.getState(modelKey);
+            allResults.push({ key: modelKey, modelData: JSON.parse(model) });
+        }
+
+        console.info('====================== END : Querying all models approved for caller ======================');
 
         return allResults;
     }
