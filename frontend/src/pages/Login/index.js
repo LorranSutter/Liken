@@ -56,7 +56,7 @@ const Login = () => {
 
     useEffect(() => {
         if (validated && isLoading) {
-            history.push(`/client`);
+            history.push(`/org`);
             // try {
             //     api
             //         .post(`/${userType}/login`, qs.stringify({ login, password, userType }))
