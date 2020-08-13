@@ -35,16 +35,16 @@ async function main() {
         const contract = network.getContract('Liken');
 
         const conditionsData = {
-            terms: 'Many terms',
-            conditions: 'Many conditions',
-            expirationDate: '2021-10-12'
+            terms: 'Many many terms',
+            conditions: 'Many many conditions',
+            expirationDate: '2022-12-31'
         };
 
         // Submit the specified transaction.
         // const result = await contract.submitTransaction('registerModel', 'new model cool');
         // FOR SOME REASON IT MAY OR MAY NOT FAIL WHEN UPDATE SOMETHING WITH THE SAME MODEL
-        const result = await contract.submitTransaction('updateModel', 'MODEL1', 'updated model by apple');
-        // const result = await contract.submitTransaction('approve', 'MODEL4', 'apple', JSON.stringify(conditionsData));
+        // const result = await contract.submitTransaction('updateModel', 'MODEL1', 'updated model by apple');
+        const result = await contract.submitTransaction('approve', 'MODEL2', 'microsoft', JSON.stringify(conditionsData));
         // const result = await contract.submitTransaction('remove', 'MODEL1', 'apple');
         console.log(result.toString());
         console.log('Transaction has been submitted');

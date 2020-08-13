@@ -15,13 +15,19 @@ InitiateMongoServer(mongoURI);
 const orgs = [
     {
         login: 'microsoft',
-        password: '123456',
-        orgCredentials: '{orgNum:1,ledgerUser:microsoft}'
+        password: 'strongpassword',
+        orgCredentials: {
+            orgNum: 1,
+            ledgerUser: 'microsoft'
+        }
     },
     {
         login: 'apple',
-        password: '123456',
-        orgCredentials: '{orgNum:2,ledgerUser:apple}'
+        password: 'strongpassword',
+        orgCredentials: {
+            orgNum: 2,
+            ledgerUser: 'apple'
+        }
     }
 ];
 
