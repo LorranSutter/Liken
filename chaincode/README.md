@@ -3,7 +3,7 @@
 | Function | Visibility | Parameters | Action | Returns |
 |-|:-:|-|-|-|
 | `initLedger` | public | `array of objects` initialData  | Populates the ledger with initialData parameter. Can be called only once. |  |
-| `registerModel` | public | `object model | Stringifies model parameter. Saves the model in the ledger. | `bool` success or fail |
+| `registerModel` | public | `object` modelData | Stringifies model parameter. Saves the model in the ledger. | `bool` success or fail |
 | `approve` | public | `string` modelKey, `string` user | Allows user to update model. Creates composite key. | `bool` success or fail |
 | `remove` | public | `string` modelKey, `string` user | Removes user allowance. Deletes composite key. | `bool` success or fail |
 | `updateModel` | public | `string` modelKey, `object` modelUpdate | Checks if caller is allowed to update model. Updates model. | `bool` success or fail |
