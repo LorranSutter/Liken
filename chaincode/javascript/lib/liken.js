@@ -63,13 +63,15 @@ class Liken extends Contract {
     async registerModel(ctx, modelData) {
         console.info('============= START : Register model ===========');
 
+        modelData = JSON.parse(modelData);
         const callerId = utils.getCallerId(ctx);
 
         const model = {
             owner: callerId,
-            model: modelData,
+            modelObject: modelData.modelObject,
+            modelName: modelData.modelName,
+            modelDescription: modelData.modelDescription,
             publicationDate: new Date().toISOString(),
-            datasetIDs: [],
             whoPublishedLast: callerId
         };
 
