@@ -68,11 +68,9 @@ class Liken extends Contract {
 
         const model = {
             owner: callerId,
-            modelObject: modelData.modelObject,
-            modelName: modelData.modelName,
-            modelDescription: modelData.modelDescription,
             publicationDate: new Date().toISOString(),
-            whoPublishedLast: callerId
+            whoPublishedLast: callerId,
+            ...modelData
         };
 
         const newId = 'MODEL' + this.nextModelId;
@@ -255,19 +253,19 @@ class Liken extends Contract {
     async updateModel(ctx, modelKey, modelData) {
         console.info('======== START : Update model ==========');
 
-        const res = await utils.isAllowed(ctx, modelKey);
-
-        if (!res) {
+        if (!await utils.isAllowed(ctx, modelKey)) {
             return false;
         }
 
+        modelData = JSON.parse(modelData);
         const callerId = utils.getCallerId(ctx);
         const modelAsBytes = await ctx.stub.getState(modelKey);
         let model = JSON.parse(modelAsBytes.toString());
 
-        model.model = modelData;
         model.publicationDate = new Date().toISOString();
         model.whoPublishedLast = callerId;
+
+        model = { ...model, ...modelData };
 
         await ctx.stub.putState(modelKey, Buffer.from(JSON.stringify(model)));
 
