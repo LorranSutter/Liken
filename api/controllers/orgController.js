@@ -34,10 +34,10 @@ exports.registerModel = async (req, res) => {
 
     networkConnection
         .submitTransaction('registerModel', req.orgNum, req.ledgerUser, [modelData])
-        // .submitTransaction('registerModel', req.query.orgNum, req.query.ledgerUser, [modelData])
         .then(result => {
             if (result.length > 0) {
                 result = result.toString();
+                // TODO change to use cookies
                 // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerId}` });
                 return res.json({ message: `Model ${result} registered by ${req.ledgerUser}`, ledgerKey: result });
             }
@@ -98,6 +98,7 @@ exports.approve = async (req, res) => {
         .then(result => {
             if (result) {
                 if (JSON.parse(result.toString())) {
+                    // TODO change to use cookies
                     // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
                     return res.json({ message: `Organization ${org} approved by ${req.ledgerUser}` });
                 }
@@ -119,10 +120,68 @@ exports.remove = async (req, res) => {
         .then(result => {
             if (result) {
                 if (JSON.parse(result.toString())) {
+                    // TODO change to use cookies
                     // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
                     return res.json({ message: `Organization ${org} has the approval removed by ${req.ledgerUser}` });
                 }
                 return res.json({ message: `You are not the owner of the model ${modelKey}` });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
+exports.queryAllModelsByOwner = (req, res) => {
+
+    networkConnection
+        .evaluateTransaction('queryAllModelsByOwner', req.orgNum, req.ledgerUser)
+        .then(result => {
+            if (result) {
+                if (result.length > 0) {
+                    return res.json({ modelList: JSON.parse(result.toString()) });
+                }
+                return res.json({ modelList: result.toString() });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
+exports.queryAllModelsByApprovedUser = (req, res) => {
+
+    networkConnection
+        .evaluateTransaction('queryAllModelsByApprovedUser', req.orgNum, req.ledgerUser)
+        .then(result => {
+            if (result) {
+                if (result.length > 0) {
+                    return res.json({ modelList: JSON.parse(result.toString()) });
+                }
+                return res.json({ modelList: result.toString() });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
+exports.updateModel = (req, res) => {
+
+    const { modelKey, modelName, modelDescription, modelObject } = req.body;
+    const modelData = JSON.stringify({ modelName, modelDescription, modelObject });
+
+    networkConnection
+        .submitTransaction('updateModel', req.orgNum, req.ledgerUser, [modelKey, modelData])
+        .then(result => {
+            if (result) {
+                if (result.length > 0) {
+                    return res.json({ modelList1: JSON.parse(result.toString()) });
+                }
+                return res.json({ modelList2: result.toString() });
             }
             return res.status(500).json({ error: 'Something went wrong' });
         })

@@ -7,9 +7,6 @@ const orgValidator = require('../middleware/orgValidator');
 const { validate } = require('../middleware/validate');
 const credentials = require('../middleware/credentials');
 
-// const financialInsitutionController = require('../controllers/financialInsitutionController');
-// const fiValidator = require('../middleware/fiValidator');
-
 router.post('/login',
     orgValidator.login,
     validate,
@@ -40,41 +37,27 @@ router.post('/approve',
     orgController.approve);
 
 // TODO Change to check login\
-// TODO Change to check credentials
 router.post('/remove',
     // checkLogin,
     credentials.getOrgCredentials,
     orgController.remove);
 
-// router.get('/getApprovedFis',
-//     checkLogin,
-//     credentials.getWhoRegistered,
-//     clientController.getApprovedFis);
+// TODO Change to check login
+router.get('/queryAllModelsByOwner',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.queryAllModelsByOwner);
 
-// router.post('/createClient',
-//     fiValidator.registration,
-//     validate,
-//     credentials.getOrgCredentials,
-//     financialInsitutionController.createClient);
+// TODO Change to check login
+router.get('/queryAllModelsByApprovedUser',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.queryAllModelsByApprovedUser);
 
-// router.post('/login',
-//     fiValidator.login,
-//     validate,
-//     financialInsitutionController.login);
-
-// router.get('/getFiData',
-//     checkLogin,
-//     credentials.getOrgCredentials,
-//     financialInsitutionController.getFiData);
-
-// router.get('/getClientData',
-//     checkLogin,
-//     credentials.getOrgCredentials,
-//     financialInsitutionController.getClientData);
-
-// router.get('/getApprovedClients',
-//     checkLogin,
-//     credentials.getOrgCredentials,
-//     financialInsitutionController.getApprovedClients);
+// TODO Change to check login
+router.put('/updateModel',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.updateModel);
 
 module.exports = router;
