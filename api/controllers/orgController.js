@@ -27,14 +27,33 @@ exports.login = async (req, res) => {
     return res.json({ userJWT, ledgerId: org.login, orgCredentials: org.orgCredentials });
 };
 
+exports.registerModel = async (req, res) => {
+
+    const { modelName, modelDescription, modelObject } = req.body;
+    const modelData = JSON.stringify({ modelName, modelDescription, modelObject });
+
+    networkConnection
+        .submitTransaction('registerModel', req.orgNum, req.ledgerUser, [modelData])
+        // .submitTransaction('registerModel', req.query.orgNum, req.query.ledgerUser, [modelData])
+        .then(result => {
+            if (result.length > 0) {
+                result = result.toString();
+                // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerId}` });
+                return res.json({ message: `Model ${result} registered by ${req.ledgerUser}`, ledgerKey: result });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
 exports.getModelData = (req, res) => {
 
     const { modelKey } = req.query;
 
-    // TODO Change to use cookies
     networkConnection
-        // .evaluateTransaction('getModelData', req.orgNum, req.ledgerUser, [req.cookies.ledgerId, fields || []])
-        .evaluateTransaction('getModelData', req.query.orgNum, req.query.ledgerUser, [modelKey])
+        .evaluateTransaction('getModelData', req.orgNum, req.ledgerUser, [modelKey])
         .then(result => {
             if (result) {
                 if (result.length > 0) {
@@ -53,16 +72,57 @@ exports.getFullModelData = (req, res) => {
 
     const { modelKey } = req.query;
 
-    // TODO Change to use cookies
     networkConnection
-        // .evaluateTransaction('getModelData', req.orgNum, req.ledgerUser, [req.cookies.ledgerId, fields || []])
-        .evaluateTransaction('getFullModelData', req.query.orgNum, req.query.ledgerUser, [modelKey])
+        .evaluateTransaction('getFullModelData', req.orgNum, req.ledgerUser, [modelKey])
         .then(result => {
             if (result) {
                 if (result.length > 0) {
                     return res.json({ modelData: JSON.parse(result.toString()) });
                 }
                 return res.json({ modelData: result.toString() });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
+exports.approve = async (req, res) => {
+
+    const { modelKey, org, terms, conditions, expirationDate } = req.body;
+    const detailsData = JSON.stringify({ terms, conditions, expirationDate });
+
+    networkConnection
+        .submitTransaction('approve', req.orgNum, req.ledgerUser, [modelKey, org, detailsData])
+        .then(result => {
+            if (result) {
+                if (JSON.parse(result.toString())) {
+                    // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
+                    return res.json({ message: `Organization ${org} approved by ${req.ledgerUser}` });
+                }
+                return res.json({ message: `You are not the owner of the model ${modelKey}` });
+            }
+            return res.status(500).json({ error: 'Something went wrong' });
+        })
+        .catch((err) => {
+            return res.status(500).json({ error: `Something went wrong\n ${err}` });
+        });
+};
+
+exports.remove = async (req, res) => {
+
+    const { modelKey, org } = req.body;
+
+    networkConnection
+        .submitTransaction('remove', req.orgNum, req.ledgerUser, [modelKey, org])
+        .then(result => {
+            if (result) {
+                if (JSON.parse(result.toString())) {
+                    // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
+                    return res.json({ message: `Organization ${org} has the approval removed by ${req.ledgerUser}` });
+                }
+                return res.json({ message: `You are not the owner of the model ${modelKey}` });
             }
             return res.status(500).json({ error: 'Something went wrong' });
         })

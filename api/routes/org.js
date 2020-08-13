@@ -5,7 +5,7 @@ const orgController = require('../controllers/orgController');
 // const { checkLogin } = require('../middleware/auth');
 const orgValidator = require('../middleware/orgValidator');
 const { validate } = require('../middleware/validate');
-// const credentials = require('../middleware/credentials');
+const credentials = require('../middleware/credentials');
 
 // const financialInsitutionController = require('../controllers/financialInsitutionController');
 // const fiValidator = require('../middleware/fiValidator');
@@ -16,28 +16,35 @@ router.post('/login',
     orgController.login);
 
 // TODO Change to check login
-// TODO Change to check credentials
+router.post('/registerModel',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.registerModel);
+
+// TODO Change to check login
 router.get('/getModelData',
     // checkLogin,
-    // credentials.orgCredentials,
+    credentials.getOrgCredentials,
     orgController.getModelData);
 
 // TODO Change to check login\
-// TODO Change to check credentials
 router.get('/getFullModelData',
     // checkLogin,
-    // credentials.orgCredentials,
+    credentials.getOrgCredentials,
     orgController.getFullModelData);
 
-// router.post('/approve',
-//     checkLogin,
-//     credentials.getWhoRegistered,
-//     clientController.approve);
+// TODO Change to check login\
+router.post('/approve',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.approve);
 
-// router.post('/remove',
-//     checkLogin,
-//     credentials.getWhoRegistered,
-//     clientController.remove);
+// TODO Change to check login\
+// TODO Change to check credentials
+router.post('/remove',
+    // checkLogin,
+    credentials.getOrgCredentials,
+    orgController.remove);
 
 // router.get('/getApprovedFis',
 //     checkLogin,
