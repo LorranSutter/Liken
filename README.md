@@ -23,7 +23,7 @@ This project combines these two cutting edge technologies. Since huge datasets a
 - [Intro](#intro)
 - [Flow Chart](#flow-chart)
 - [Sequence Diagram](#sequence-diagram)
-- [Resources](#book-resources)
+- [Resources](#book-resources-and-tools-hammer)
 - [Technologies](#computer-technologies)
 <!-- - [Architecture](#architecture) -->
 <!-- - [How to run](#runner-how-to-run) -->
@@ -214,9 +214,10 @@ Financial Institution
 * login: FI1 / FI2
 * password: 123456 -->
 
-# :book: Resources
+# :book: Resources and Tools :hammer:
 
 - [Notion](https://www.notion.so/) - easy to use workspace
+- [Insomnia](https://insomnia.rest/) - API explorer
 - [HLF SDK documentation](https://hyperledger.github.io/fabric-chaincode-node/release-1.4/api/index.html)
 <!-- - [Private data - article](https://medium.com/@spsingh559/deep-dive-into-private-data-in-hyperledger-fabric-cf23931e8f96) -->
 
