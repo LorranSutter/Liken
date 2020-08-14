@@ -1,13 +1,29 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { ToastContainer, toast } from 'react-toastify';
 import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
+
+import styled from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 
 import qs from 'qs';
 
 import api from '../../service/api';
+import ModelData from '../../components/ModelData';
 
-// import styles from './styles.module.css';
+const StyledToastContainer = styled(ToastContainer).attrs({
+    bodyClassName: 'body',
+    progressClassName: 'progress',
+})`
+    width: 30%;
+    .body {
+        color: #595959;
+    }
+    .progress {
+        background: #35C0EDff;
+    }
+  `;
 
 const NewModel = (props) => {
 
@@ -109,7 +125,7 @@ const NewModel = (props) => {
                     .then(res => {
                         console.log(res);
                         if (res.status === 200) {
-                            setNewModelMsg(res.data.message);
+                            // setNewModelMsg(res.data.message);
                         } else {
                             console.log('Oopps... something wrong, status code ' + res.status);
                             return function cleanup() { }
@@ -121,6 +137,7 @@ const NewModel = (props) => {
                         return function cleanup() { }
                     })
                     .finally(() => {
+                        toast(`${props.location.state.title} approved for ${orgData.org}!`);
                         setIsLoading(false);
                     });
             } catch (error) {
@@ -277,6 +294,17 @@ const NewModel = (props) => {
                         </Flex>
                     </Card>
                 </Form>
+                <StyledToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </Box>
         </Flex>
     );

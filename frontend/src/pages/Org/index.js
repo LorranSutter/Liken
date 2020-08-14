@@ -219,6 +219,7 @@ const Org = () => {
         history.push('/org/models/new');
     };
 
+    // FIXME Not removing cookies sync
     function handleClickLogout() {
         removeCookie('userJWT');
         removeCookie('ledgerUser');
@@ -252,7 +253,7 @@ const Org = () => {
                     {/* </Suspense> */}
                 </Card>
                 <Card mt={20}>
-                    <Heading as={'h1'}>Available models</Heading>
+                    <Heading as={'h1'}>My approved models</Heading>
                     {/* <Suspense fallback={<Loader mx={'auto'} size='50px' />}> */}
                     {!approvedModels ? <Loader mx={'auto'} size='50px' /> : approvedModels.map((modelData, key) => (
                         <ModelData key={key} modelData={modelData} />
