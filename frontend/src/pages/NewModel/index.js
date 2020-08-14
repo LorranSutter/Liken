@@ -94,7 +94,7 @@ const NewModel = () => {
                         <Heading as={'h2'} color={'primary'}>New Model</Heading>
                     </Box>
                     <Box my={'auto'}>
-                        <Button onClick={handleClickOnBack}>Back</Button>
+                        <Button.Outline icon='ArrowBack' onClick={handleClickOnBack}>Back</Button.Outline>
                     </Box>
                 </Flex>
                 <Form onSubmit={handleSubmit}>
@@ -150,7 +150,7 @@ const NewModel = () => {
                         </Box>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
-                                <Button type="submit" mt={2} disabled={submitDisabled}>
+                                <Button icon='Add' type="submit" mt={2} disabled={submitDisabled}>
                                     {isLoading ? <Loader color="white" /> : <p>Register new model</p>}
                                 </Button>
                             </Box>

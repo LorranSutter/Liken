@@ -232,13 +232,13 @@ const Org = () => {
                             src={logoHorizontal}
                         />
                     </Box>
-                    <Box my={'auto'}>
-                        <Button mr={2} onClick={handleClickNewModel}>New Model</Button>
-                        <Button onClick={handleClickLogout}>Logout</Button>
-                    </Box>
+                    <Flex my={'auto'}>
+                        <Button icon='Add' mr={2} onClick={handleClickNewModel}>New Model</Button>
+                        <Button.Outline icon='PowerSettingsNew' onClick={handleClickLogout}>Logout</Button.Outline>
+                    </Flex>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>My models</Heading>
+                    <Heading as={'h1'}>My models</Heading>
                     <Suspense fallback={<Loader mx={'auto'} size='50px' />}>
                         {myModels.map((modelData, key) => (
                             <ModelData key={key} modelData={modelData} share />
@@ -246,7 +246,7 @@ const Org = () => {
                     </Suspense>
                 </Card>
                 <Card mt={20}>
-                    <Heading as={'h2'}>Available models</Heading>
+                    <Heading as={'h1'}>Available models</Heading>
                     <Suspense fallback={<Loader mx={'auto'} size='50px' />}>
                         {availableModels.map((modelData, key) => (
                             <ModelData key={key} modelData={modelData} />
