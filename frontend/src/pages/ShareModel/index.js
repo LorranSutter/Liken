@@ -12,36 +12,42 @@ import api from '../../service/api';
 const NewModel = (props) => {
 
     const [title, setTitle] = useState();
-    const [modelKey, setModelKey] = useState();
-
-    useEffect(() => {
-        if (props.location.state) {
-            setTitle(props.location.state.title ?? 'New Model');
-            setModelKey(props.location.state.modelKey);
-        }
-    }, []);
 
     const history = useHistory();
     const [cookies, setCookie] = useCookies();
 
     const [validated, setValidated] = useState(false);
     const [orgList, setOrgList] = useState([]);
-    const [selectedOrg, setSelectedOrg] = useState('');
-    const [terms, setTerms] = useState('');
-    const [conditions, setConditions] = useState('');
-    const [expirationDate, setExpirationDate] = useState('');
+
+    const [orgData, setOrgData] = useState({});
+
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [newModelMsg, setNewModelMsg] = useState('');
 
+    function handleSelectOrg(e) {
+        setOrgData({ ...orgData, org: e.target.value });
+    };
+
+    function handleTerms(e) {
+        setOrgData({ ...orgData, terms: e.target.value });
+    };
+
+    function handleConditions(e) {
+        setOrgData({ ...orgData, conditions: e.target.value });
+    };
+
+    function handleExpirationDate(e) {
+        setOrgData({ ...orgData, expirationDate: e.target.value });
+    };
 
     const validateForm = useCallback(
         () => {
             if (
-                selectedOrg && selectedOrg.length > 0 &&
-                terms && terms.length > 10 &&
-                conditions && conditions.length > 10 &&
-                expirationDate && expirationDate.length > 0 &&
+                orgData.org && orgData.org.length > 0 &&
+                orgData.terms && orgData.terms.length > 10 &&
+                orgData.conditions && orgData.conditions.length > 10 &&
+                orgData.expirationDate && orgData.expirationDate.length > 0 &&
                 !isLoading
             ) {
                 setValidated(true);
@@ -51,8 +57,14 @@ const NewModel = (props) => {
                 setSubmitDisabled(true);
             }
         },
-        [selectedOrg, terms, conditions, expirationDate, isLoading]
+        [orgData, isLoading]
     );
+
+    useEffect(() => {
+        if (props.location.state) {
+            setTitle(props.location.state.title ?? 'New Model');
+        }
+    }, []);
 
     useEffect(() => {
         try {
@@ -62,7 +74,11 @@ const NewModel = (props) => {
                     if (res.status === 200) {
                         const orgs = res.data.orgs.filter(org => org !== cookies.ledgerId);
                         setOrgList(orgs);
-                        setSelectedOrg(orgs.length > 0 && orgs[0]);
+                        setOrgData({
+                            ...orgData,
+                            modelKey: props.location.state.modelKey,
+                            org: orgs.length > 0 && orgs[0]
+                        });
                     } else {
                         console.log('Oopps... something wrong, status code ' + res.status);
                         return function cleanup() { }
@@ -84,36 +100,37 @@ const NewModel = (props) => {
         validateForm();
     }, [validateForm]);
 
-    // useEffect(() => {
-    //     if (validated && isLoading) {
-    //         try {
-    //             api
-    //                 .post('/fi/createClient', qs.stringify(clientData))
-    //                 .then(res => {
-    //                     console.log(res);
-    //                     if (res.status === 200) {
-    //                         setNewModelMsg(res.data.message);
-    //                     } else {
-    //                         console.log('Oopps... something wrong, status code ' + res.status);
-    //                         return function cleanup() { }
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     console.log('Oopps... something wrong');
-    //                     console.log(err);
-    //                     return function cleanup() { }
-    //                 })
-    //                 .finally(() => {
-    //                     setIsLoading(false);
-    //                 });
-    //         } catch (error) {
-    //             console.log('Oopps... something wrong');
-    //             console.log(error);
-    //             setIsLoading(false);
-    //             return function cleanup() { }
-    //         }
-    //     }
-    // }, [name, description, validated, isLoading, history]);
+    useEffect(() => {
+        console.log(orgData);
+        if (validated && isLoading) {
+            try {
+                api
+                    .post('/org/approve', qs.stringify(orgData))
+                    .then(res => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            setNewModelMsg(res.data.message);
+                        } else {
+                            console.log('Oopps... something wrong, status code ' + res.status);
+                            return function cleanup() { }
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('Oopps... something wrong');
+                        console.log(err);
+                        return function cleanup() { }
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            } catch (error) {
+                console.log('Oopps... something wrong');
+                console.log(error);
+                setIsLoading(false);
+                return function cleanup() { }
+            }
+        }
+    }, [orgData, validated, isLoading, history]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -142,16 +159,10 @@ const NewModel = (props) => {
                         <Flex mx={-3} flexWrap={"wrap"}>
                             <Box width={1} px={3}>
                                 <Field label="Organization" width={1}>
-                                    {/* <Form.Input
-                                        type="text"
-                                        required
-                                        onChange={(e) => setSelectedOrg(e.target.value)}
-                                        value={organization}
-                                        width={1}
-                                    /> */}
                                     <select
                                         required
-                                        onChange={e => setSelectedOrg(e.target.value)}
+                                        // onChange={e => setSelectedOrg(e.target.value)}
+                                        onChange={handleSelectOrg}
                                         style={
                                             {
                                                 boxSizing: "border-box",
@@ -179,8 +190,9 @@ const NewModel = (props) => {
                                 <Field label="Terms" width={1}>
                                     <textarea
                                         required
-                                        onChange={(e) => setTerms(e.target.value)}
-                                        value={terms}
+                                        // onChange={(e) => setTerms(e.target.value)}
+                                        onChange={handleTerms}
+                                        value={orgData.terms}
                                         name="Terms"
                                         rows="7"
                                         style={
@@ -210,8 +222,9 @@ const NewModel = (props) => {
                                 <Field label="Conditions" width={1}>
                                     <textarea
                                         required
-                                        onChange={(e) => setConditions(e.target.value)}
-                                        value={conditions}
+                                        // onChange={(e) => setConditions(e.target.value)}
+                                        onChange={handleConditions}
+                                        value={orgData.conditions}
                                         name="Conditions"
                                         rows="7"
                                         style={
@@ -242,8 +255,9 @@ const NewModel = (props) => {
                                     <Form.Input
                                         type="date"
                                         required
-                                        onChange={(e) => setExpirationDate(e.target.value)}
-                                        value={expirationDate}
+                                        // onChange={(e) => setExpirationDate(e.target.value)}
+                                        onChange={handleExpirationDate}
+                                        value={orgData.expirationDate}
                                         width={1}
                                     />
                                 </Field>
@@ -251,7 +265,7 @@ const NewModel = (props) => {
                         </Flex>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
-                                <Button icon='Share' type="submit" mt={2} disabled={submitDisabled}>
+                                <Button icon={!isLoading && 'Share'} type="submit" mt={2} disabled={submitDisabled}>
                                     {isLoading ? <Loader color="white" /> : <p>Share model</p>}
                                 </Button>
                             </Box>
