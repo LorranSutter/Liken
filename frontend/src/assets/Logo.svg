@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="83.742805mm"
+   height="121.63387mm"
+   viewBox="0 0 83.742805 121.63387"
+   version="1.1"
+   id="svg1660"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="Logo.svg">
+  <defs
+     id="defs1654" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-331.90682"
+     inkscape:cy="222.71637"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1657">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-60.602728,-86.126512)">
+    <g
+       transform="matrix(1.4640519,0,0,1.4640519,506.81137,-167.85718)"
+       id="g1050">
+      <text
+         inkscape:export-ydpi="134.7"
+         inkscape:export-xdpi="134.7"
+         id="text894"
+         y="256.56027"
+         x="-306.81461"
+         style="font-style:normal;font-weight:normal;font-size:22.68478775px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#595959;fill-opacity:0.94117647;stroke:none;stroke-width:0.85067958"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Light';fill:#595959;fill-opacity:0.94117647;stroke-width:0.85067958"
+           y="256.56027"
+           x="-306.81461"
+           id="tspan892"
+           sodipodi:role="line">LIKEN</tspan></text>
+      <g
+         inkscape:export-ydpi="134.7"
+         inkscape:export-xdpi="134.7"
+         id="g904"
+         transform="matrix(2.3474304,0,0,2.3474304,17.289018,-71.331522)"
+         style="stroke:#35c0ef;stroke-opacity:0.94117647">
+        <path
+           inkscape:connector-curvature="0"
+           id="path896"
+           d="m -115.25998,117.4951 -1.57021,7.51696 -4.34313,2.60587 -13.66416,-13.0962 1.67044,-7.51696 h 11.9269 z"
+           style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path898"
+           d="m -115.25998,117.4951 -5.91334,10.12283"
+           style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path900"
+           d="m -116.83019,125.01206 h -11.86009 l -6.1472,-10.49033 6.08038,-10.02261 13.49712,12.99598 -13.36348,7.51696"
+           style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path902"
+           d="m -134.83748,114.52173 19.5775,2.97337 -17.90706,-10.49033 4.40994,-2.50565"
+           style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+.expander {
+	outline: none;
+}
+.expander:hover {
+	cursor: pointer;
+}

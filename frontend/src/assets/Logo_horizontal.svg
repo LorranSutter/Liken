@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="113.46989mm"
+   height="33.680496mm"
+   viewBox="0 0 113.46989 33.680496"
+   version="1.1"
+   id="svg1075"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="Logo_horizontal.svg">
+  <defs
+     id="defs1069" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-284.14014"
+     inkscape:cy="84.335045"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1072">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-47.96446,-137.46649)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:28.91321564px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#595959;fill-opacity:0.94117647;stroke:none;stroke-width:1.08424556"
+       x="85.932449"
+       y="165.90454"
+       id="text1738"><tspan
+         sodipodi:role="line"
+         id="tspan1736"
+         x="85.932449"
+         y="165.90454"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Roboto;-inkscape-font-specification:'Roboto Light';fill:#595959;fill-opacity:0.94117647;stroke-width:1.08424556">LIKEN</tspan></text>
+    <g
+       style="stroke:#35c0ef;stroke-opacity:0.94117647"
+       transform="matrix(1.4335653,0,0,1.4335653,241.48359,-12.038808)"
+       id="g1748">
+      <path
+         style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647"
+         d="m -115.25998,117.4951 -1.57021,7.51696 -4.34313,2.60587 -13.66416,-13.0962 1.67044,-7.51696 h 11.9269 z"
+         id="path1740"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647"
+         d="m -115.25998,117.4951 -5.91334,10.12283"
+         id="path1742"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647"
+         d="m -116.83019,125.01206 h -11.86009 l -6.1472,-10.49033 6.08038,-10.02261 13.49712,12.99598 -13.36348,7.51696"
+         id="path1744"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;stroke:#35c0ef;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.94117647"
+         d="m -134.83748,114.52173 19.5775,2.97337 -17.90706,-10.49033 4.40994,-2.50565"
+         id="path1746"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>
