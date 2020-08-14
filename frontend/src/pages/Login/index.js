@@ -37,7 +37,6 @@ const Login = () => {
             if (
                 login.length > 0 &&
                 password.length > 5 &&
-                userType.length > 0 &&
                 !isLoading
             ) {
                 setValidated(true);
@@ -56,45 +55,42 @@ const Login = () => {
 
     useEffect(() => {
         if (validated && isLoading) {
-            history.push(`/org`);
-            // try {
-            //     api
-            //         .post(`/${userType}/login`, qs.stringify({ login, password, userType }))
-            //         .then(res => {
-            //             if (res.status === 200) {
+            try {
+                api
+                    .post('/org/login', qs.stringify({ login, password }))
+                    .then(res => {
+                        if (res.status === 200) {
 
-            //                 removeCookie('userJWT');
-            //                 removeCookie('ledgerId');
-            //                 removeCookie('whoRegistered');
-            //                 removeCookie('orgCredentials');
+                            removeCookie('userJWT');
+                            // removeCookie('ledgerId');
+                            removeCookie('orgCredentials');
 
-            //                 setCookie('userJWT', res.data.userJWT);
-            //                 res.data.ledgerId && setCookie('ledgerId', res.data.ledgerId);
-            //                 res.data.whoRegistered && setCookie('whoRegistered', res.data.whoRegistered);
-            //                 res.data.orgCredentials && setCookie('orgCredentials', res.data.orgCredentials);
-            //                 history.push(`/${userType}`);
+                            setCookie('userJWT', res.data.userJWT);
+                            // res.data.ledgerId && setCookie('ledgerId', res.data.ledgerId);
+                            res.data.orgCredentials && setCookie('orgCredentials', res.data.orgCredentials);
+                            history.push('/org');
 
-            //             } else {
-            //                 console.log('Oopps... something wrong, status code ' + res.status);
-            //                 return function cleanup() { }
-            //             }
-            //         })
-            //         .catch((err) => {
-            //             console.log('Oopps... something wrong');
-            //             console.log(err);
-            //             return function cleanup() { }
-            //         })
-            //         .finally(() => {
-            //             setIsLoading(false);
-            //         });
-            // } catch (error) {
-            //     console.log('Oopps... something wrong');
-            //     console.log(error);
-            //     setIsLoading(false);
-            //     return function cleanup() { }
-            // }
+                        } else {
+                            console.log('Oopps... something wrong, status code ' + res.status);
+                            return function cleanup() { }
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('Oopps... something wrong');
+                        console.log(err);
+                        return function cleanup() { }
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            } catch (error) {
+                console.log('Oopps... something wrong');
+                console.log(error);
+                setIsLoading(false);
+                return function cleanup() { }
+            }
         }
-    }, [login, password, userType, validated, isLoading, history, setCookie]);
+    }, [login, password, validated, isLoading, history, setCookie]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -137,26 +133,6 @@ const Login = () => {
                                 </Field>
                             </Box>
                         </Flex>
-                        {/* <Flex mx={-3} flexWrap={"wrap"}>
-                            <Box width={1} px={3}>
-                                <Field label="Role" optional={false}>
-                                    <Radio
-                                        label="Client"
-                                        my={2}
-                                        value={"client"}
-                                        checked={userType === "client"}
-                                        onChange={handleRadio}
-                                    />
-                                    <Radio
-                                        label="Financial Institution"
-                                        my={2}
-                                        value={"fi"}
-                                        checked={userType === "fi"}
-                                        onChange={handleRadio}
-                                    />
-                                </Field>
-                            </Box>
-                        </Flex> */}
                         <Button type="submit" disabled={submitDisabled} width={1}>
                             {isLoading ? <Loader color="white" /> : <p>Login</p>}
                         </Button>
