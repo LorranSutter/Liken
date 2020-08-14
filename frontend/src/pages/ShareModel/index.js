@@ -8,7 +8,17 @@ import api from '../../service/api';
 
 // import styles from './styles.module.css';
 
-const NewModel = () => {
+const NewModel = (props) => {
+
+    const [title, setTitle] = useState();
+    const [modelKey, setModelKey] = useState();
+
+    useEffect(() => {
+        if (props.location.state) {
+            setTitle(props.location.state.title ?? 'New Model');
+            setModelKey(props.location.state.modelKey);
+        }
+    }, []);
 
     const history = useHistory();
 
@@ -92,7 +102,7 @@ const NewModel = () => {
             <Box mx={'auto'} my={'auto'} width={[1, 9 / 12, 7 / 12]}>
                 <Flex px={2} mx={'auto'} justifyContent='space-between'>
                     <Box my={'auto'}>
-                        <Heading as={'h2'} color={'primary'}>Model Name</Heading>
+                        <Heading as={'h2'} color={'primary'}>{title}</Heading>
                     </Box>
                     <Box my={'auto'}>
                         <Button.Outline icon='ArrowBack' onClick={handleClickOnBack}>Back</Button.Outline>

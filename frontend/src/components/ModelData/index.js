@@ -5,13 +5,13 @@ import useCollapse from 'react-collapsed';
 
 import styles from './styles.module.css';
 
-const Data = React.memo(({ modelData, share }) => {
+const Data = React.memo(({ modelKey, title, modelData, share }) => {
 
     const history = useHistory();
 
     const handleShareModel = e => {
         e.preventDefault();
-        history.push('/org/models/share');
+        history.push('/org/models/share', { modelKey, title });
     };
 
     return (
@@ -38,7 +38,13 @@ const Data = React.memo(({ modelData, share }) => {
                 </Box>
                 <Box>
                     {share && (
-                        <Button mainColor={'#00ace6'} icon='Share' mt={2} type="submit" onClick={handleShareModel}>
+                        <Button
+                            mainColor={'#00ace6'}
+                            icon='Share'
+                            mt={2}
+                            type="submit"
+                            onClick={handleShareModel}
+                        >
                             Share model
                             {/* {isLoadingRemove ? <Loader color="white" /> : <p>Share model</p>} */}
                         </Button>
@@ -49,9 +55,9 @@ const Data = React.memo(({ modelData, share }) => {
     );
 })
 
-const UserData = ({ title, modelData, share }) => {
+const ModelData = ({ title, modelData, share }) => {
 
-    title = title ?? modelData.filter(item => item.label === 'Name')[0].value;
+    title = title ?? modelData.modelData.filter(item => item.label === 'Name')[0].value;
 
     const [renderChildren, setRenderChildren] = useState(false);
     const { getToggleProps, getCollapseProps, isExpanded } = useCollapse({
@@ -81,11 +87,11 @@ const UserData = ({ title, modelData, share }) => {
             </Flex>
             <div {...getCollapseProps()}>
                 {renderChildren && (
-                    <Data modelData={modelData} share={share} />
+                    <Data modelKey={modelData.modelKey} title={title} modelData={modelData.modelData} share={share} />
                 )}
             </div>
         </Box>
     );
 }
 
-export default UserData;
+export default ModelData;

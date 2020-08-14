@@ -2,7 +2,7 @@
 
 |End Point                          |Method|Params                                      | HLF function                 |Returns                  |
 |:---                               |:---: | :---                                       | :---                         |             :---        |
-|`\login`                           | POST |login; passowrd                             |      -                       |JWT; credentials         |
+|`\org\login`                       | POST |login; passowrd                             |      -                       |JWT; credentials         |
 |`\org\registerModel`               | POST |credentials; name; description; model object|`registerModel`               |status message; model key|
 |`\org\getModelData`                | GET  |modelKey; credentials                       |`getModelData`                |public model data        |
 |`\org\getFullModelData`            | GET  |modelKey; credentials                       |`getFullModelData`            |full model data          |

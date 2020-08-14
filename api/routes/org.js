@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const orgController = require('../controllers/orgController');
-// const { checkLogin } = require('../middleware/auth');
+const { checkLogin } = require('../middleware/auth');
 const orgValidator = require('../middleware/orgValidator');
 const { validate } = require('../middleware/validate');
 const credentials = require('../middleware/credentials');
@@ -44,7 +44,7 @@ router.post('/remove',
 
 // TODO Change to check login
 router.get('/queryAllModelsByOwner',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.queryAllModelsByOwner);
 

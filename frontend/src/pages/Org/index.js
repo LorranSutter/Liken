@@ -8,10 +8,10 @@ import axios from 'axios';
 
 import logoHorizontal from '../../assets/Logo_horizontal.svg';
 import api from '../../service/api';
-// import UserData from '../../components/UserData';
-import { setUserData } from '../../functions/setUserData';
+import ModelData from '../../components/ModelData';
+import { setModelListData } from '../../functions/setModelListData';
 
-const ModelData = lazy(() => import('../../components/ModelData'));
+// const ModelData = lazy(() => import('../../components/ModelData'));
 
 const Org = () => {
 
@@ -19,39 +19,41 @@ const Org = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
 
     // const [modelData, setModelData] = useState(
-    const [myModels, setMyModels] = useState([
-        [
-            { label: "Owner", value: "apple" },
-            { label: 'Name', value: 'Deep Learning for Multiclass Text Classification' },
-            { label: 'Description', value: 'Cleaning of special characters and removing punctuation; cleaning numbers; removing of contractions; tokenization; label encoding; text CNN; LSTM/GRU; confusion matrix.' },
-            { label: 'Publication date', value: '2020-08-06 18:25:43' },
-            { label: 'Who published last', value: 'apple' }
-        ],
-        [
-            { label: "Owner", value: "apple" },
-            { label: 'Name', value: 'Machine Learning Image Classification With TensorFlow' },
-            { label: 'Description', value: 'Image classification; perceptron; MLP; clothes, dresses, shoes, sandals and bags classification; 2D visualization.' },
-            { label: 'Publication date', value: '2020-08-04 08:14:32' },
-            { label: 'Who published last', value: 'apple' }
-        ]
-    ]);
+    const [myModels, setMyModels] = useState();
+    // const [myModels, setMyModels] = useState([
+    // [
+    //     { label: "Owner", value: "apple" },
+    //     { label: 'Name', value: 'Deep Learning for Multiclass Text Classification' },
+    //     { label: 'Description', value: 'Cleaning of special characters and removing punctuation; cleaning numbers; removing of contractions; tokenization; label encoding; text CNN; LSTM/GRU; confusion matrix.' },
+    //     { label: 'Publication date', value: '2020-08-06 18:25:43' },
+    //     { label: 'Who published last', value: 'apple' }
+    // ],
+    // [
+    //     { label: "Owner", value: "apple" },
+    //     { label: 'Name', value: 'Machine Learning Image Classification With TensorFlow' },
+    //     { label: 'Description', value: 'Image classification; perceptron; MLP; clothes, dresses, shoes, sandals and bags classification; 2D visualization.' },
+    //     { label: 'Publication date', value: '2020-08-04 08:14:32' },
+    //     { label: 'Who published last', value: 'apple' }
+    // ]
+    // ]);
 
-    const [availableModels, setAvailableModels] = useState([
-        [
-            { label: "Owner", value: "microsoft" },
-            { label: 'Name', value: 'Machine Learning model for Stock Trend Prediction' },
-            { label: 'Description', value: 'Extremely randomized forest classification; K-Means clusterization; Support Vector Machines multi-class; K-fold cross validation.' },
-            { label: 'Publication date', value: '2020-08-01 13:56:33' },
-            { label: 'Who published last', value: 'microsoft' }
-        ],
-        [
-            { label: "Owner", value: "microsoft" },
-            { label: 'Name', value: 'Sentiment analysis for text with Deep Learning' },
-            { label: 'Description', value: 'Web scrapping for data acquisition; Embeddings generation; LSTM; NLTK; cross-entropy loss' },
-            { label: 'Publication date', value: '2020-08-03 21:10:05' },
-            { label: 'Who published last', value: 'microsoft' }
-        ]
-    ]);
+    const [approvedModels, setApprovedModels] = useState();
+    // const [availableModels, setAvailableModels] = useState([
+    //     [
+    //         { label: "Owner", value: "microsoft" },
+    //         { label: 'Name', value: 'Machine Learning model for Stock Trend Prediction' },
+    //         { label: 'Description', value: 'Extremely randomized forest classification; K-Means clusterization; Support Vector Machines multi-class; K-fold cross validation.' },
+    //         { label: 'Publication date', value: '2020-08-01 13:56:33' },
+    //         { label: 'Who published last', value: 'microsoft' }
+    //     ],
+    //     [
+    //         { label: "Owner", value: "microsoft" },
+    //         { label: 'Name', value: 'Sentiment analysis for text with Deep Learning' },
+    //         { label: 'Description', value: 'Web scrapping for data acquisition; Embeddings generation; LSTM; NLTK; cross-entropy loss' },
+    //         { label: 'Publication date', value: '2020-08-03 21:10:05' },
+    //         { label: 'Who published last', value: 'microsoft' }
+    //     ]
+    // ]);
     const [approvedFiList, setApprovedFiList] = useState([]);
     const [fiIdApprove, setFiIdApprove] = useState('');
     const [approvedMsg, setApprovedMsg] = useState('');
@@ -68,35 +70,40 @@ const Org = () => {
         setFiIdRemove(e.target.value.toUpperCase());
     };
 
-    // useEffect(() => {
-    //     try {
-    //         axios.all([
-    //             api.get('/client/getClientData'),
-    //             api.get('/client/getApprovedFis')
-    //         ])
-    //             .then(axios.spread(
-    //                 (clientData, approvedFis) => {
-    //                     if (clientData.status === 200 && approvedFis.status === 200) {
-    //                         clientData = clientData.data.clientData;
-    //                         approvedFis = approvedFis.data.approvedFis;
-    //                         setUserData(clientData, setModelData);
-    //                         setApprovedFiList(approvedFis);
-    //                     } else {
-    //                         console.log('Oopps... something wrong, status code ' + clientData.status);
-    //                         return function cleanup() { }
-    //                     }
-    //                 }))
-    //             .catch((err) => {
-    //                 console.log('Oopps... something wrong');
-    //                 console.log(err);
-    //                 return function cleanup() { }
-    //             });
-    //     } catch (error) {
-    //         console.log('Oopps... something wrong');
-    //         console.log(error);
-    //         return function cleanup() { }
-    //     }
-    // }, []);
+    useEffect(() => {
+        try {
+            axios.all([
+                api.get('/org/queryAllModelsByOwner'),
+                api.get('/org/queryAllModelsByApprovedUser')
+            ])
+                .then(axios.spread(
+                    (modelListOwner, modelListApproved) => {
+                        // if (modelList.status === 200 && approvedFis.status === 200) {
+                        if (modelListOwner.status === 200 && modelListApproved.status === 200) {
+                            modelListOwner = modelListOwner.data.modelList;
+                            modelListApproved = modelListApproved.data.modelList;
+                            // approvedFis = approvedFis.data.approvedFis;
+                            console.log(modelListOwner);
+                            console.log(modelListApproved);
+                            setModelListData(modelListOwner, setMyModels);
+                            setModelListData(modelListApproved, setApprovedModels);
+                            // setApprovedFiList(approvedFis);
+                        } else {
+                            console.log('Oopps... something wrong, status code ' + modelListOwner.status);
+                            return function cleanup() { }
+                        }
+                    }))
+                .catch((err) => {
+                    console.log('Oopps... something wrong');
+                    console.log(err);
+                    return function cleanup() { }
+                });
+        } catch (error) {
+            console.log('Oopps... something wrong');
+            console.log(error);
+            return function cleanup() { }
+        }
+    }, []);
 
     // useEffect(() => {
     //     if (isLoadingApprove) {
@@ -239,19 +246,19 @@ const Org = () => {
                 </Flex>
                 <Card>
                     <Heading as={'h1'}>My models</Heading>
-                    <Suspense fallback={<Loader mx={'auto'} size='50px' />}>
-                        {myModels.map((modelData, key) => (
-                            <ModelData key={key} modelData={modelData} share />
-                        ))}
-                    </Suspense>
+                    {/* <Suspense fallback={<Loader mx={'auto'} size='50px' />}> */}
+                    {!myModels ? <Loader mx={'auto'} size='50px' /> : myModels.map((modelData, key) => (
+                        <ModelData key={key} modelData={modelData} share />
+                    ))}
+                    {/* </Suspense> */}
                 </Card>
                 <Card mt={20}>
                     <Heading as={'h1'}>Available models</Heading>
-                    <Suspense fallback={<Loader mx={'auto'} size='50px' />}>
-                        {availableModels.map((modelData, key) => (
-                            <ModelData key={key} modelData={modelData} />
-                        ))}
-                    </Suspense>
+                    {/* <Suspense fallback={<Loader mx={'auto'} size='50px' />}> */}
+                    {!approvedModels ? <Loader mx={'auto'} size='50px' /> : approvedModels.map((modelData, key) => (
+                        <ModelData key={key} modelData={modelData} />
+                    ))}
+                    {/* </Suspense> */}
                 </Card>
                 {/* <Card mt={20}>
                     <Flex my={1}>
