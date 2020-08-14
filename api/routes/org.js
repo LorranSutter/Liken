@@ -32,9 +32,8 @@ router.get('/getFullModelData',
     credentials.getOrgCredentials,
     orgController.getFullModelData);
 
-// TODO Change to check login\
 router.post('/approve',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.approve);
 
@@ -44,7 +43,6 @@ router.post('/remove',
     credentials.getOrgCredentials,
     orgController.remove);
 
-// TODO Change to check login
 router.get('/queryAllModelsByOwner',
     checkLogin,
     credentials.getOrgCredentials,
@@ -52,7 +50,7 @@ router.get('/queryAllModelsByOwner',
 
 // TODO Change to check login
 router.get('/queryAllModelsByApprovedUser',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.queryAllModelsByApprovedUser);
 

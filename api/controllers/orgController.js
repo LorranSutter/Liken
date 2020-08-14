@@ -44,8 +44,6 @@ exports.registerModel = async (req, res) => {
         .then(result => {
             if (result.length > 0) {
                 result = result.toString();
-                // TODO change to use cookies
-                // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerId}` });
                 return res.json({ message: `Model ${result} registered by ${req.ledgerUser}`, ledgerKey: result });
             }
             return res.status(500).json({ error: 'Something went wrong' });
@@ -105,8 +103,6 @@ exports.approve = async (req, res) => {
         .then(result => {
             if (result) {
                 if (JSON.parse(result.toString())) {
-                    // TODO change to use cookies
-                    // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
                     return res.json({ message: `Organization ${org} approved by ${req.ledgerUser}` });
                 }
                 return res.json({ message: `You are not the owner of the model ${modelKey}` });
@@ -127,8 +123,6 @@ exports.remove = async (req, res) => {
         .then(result => {
             if (result) {
                 if (JSON.parse(result.toString())) {
-                    // TODO change to use cookies
-                    // return res.json({ message: `Organization ${org} approved by ${req.cookies.ledgerUser}` });
                     return res.json({ message: `Organization ${org} has the approval removed by ${req.ledgerUser}` });
                 }
                 return res.json({ message: `You are not the owner of the model ${modelKey}` });
