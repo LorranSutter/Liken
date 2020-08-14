@@ -253,6 +253,7 @@ Financial Institution
     - [React Navigation](https://reactnavigation.org/) - routing and navigation for react apps
     - [React router dom](https://www.npmjs.com/package/react-router-dom) - routing and navigation for react apps
     - [React cookie](https://www.npmjs.com/package/react-cookie) - cookie interaction for React applications
+    - [React Icons](https://www.npmjs.com/package/react-icons) - icons library
     - [React dropzone](https://react-dropzone.js.org/) - create zone to drop files
     - [React collapsed](https://www.npmjs.com/package/react-collapsed) - a custom hook for creating expand/collapse components
     - [Axios](https://www.npmjs.com/package/axios) - HTTP requests
