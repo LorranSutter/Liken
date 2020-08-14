@@ -24,6 +24,6 @@ node registerUser.js 2 admin2 apple
 # node invoke.js 2 apple
 # node invoke.js 1 microsoft
 # node query.js 1 microsoft
-node query.js 2 apple
-# node populate.js 1 FI1
+# node query.js 2 apple
+node populate.js
 popd
