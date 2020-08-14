@@ -2,6 +2,7 @@
 
 |End Point                          |Method|Params                                      | HLF function                 |Returns                  |
 |:---                               |:---: | :---                                       | :---                         |             :---        |
+|`\org\index`                       | GET  |-                                           |      -                       |list of organizations    |
 |`\org\login`                       | POST |login; passowrd                             |      -                       |JWT; credentials         |
 |`\org\registerModel`               | POST |credentials; name; description; model object|`registerModel`               |status message; model key|
 |`\org\getModelData`                | GET  |modelKey; credentials                       |`getModelData`                |public model data        |

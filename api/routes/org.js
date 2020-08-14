@@ -7,6 +7,8 @@ const orgValidator = require('../middleware/orgValidator');
 const { validate } = require('../middleware/validate');
 const credentials = require('../middleware/credentials');
 
+router.get('/index', orgController.index);
+
 router.post('/login',
     orgValidator.login,
     validate,

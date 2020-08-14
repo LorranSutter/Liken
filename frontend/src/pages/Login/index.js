@@ -62,11 +62,11 @@ const Login = () => {
                         if (res.status === 200) {
 
                             removeCookie('userJWT');
-                            // removeCookie('ledgerId');
+                            removeCookie('ledgerId');
                             removeCookie('orgCredentials');
 
                             setCookie('userJWT', res.data.userJWT);
-                            // res.data.ledgerId && setCookie('ledgerId', res.data.ledgerId);
+                            setCookie('ledgerId', login);
                             res.data.orgCredentials && setCookie('orgCredentials', res.data.orgCredentials);
                             history.push('/org');
 

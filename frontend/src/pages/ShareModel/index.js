@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
 
 import qs from 'qs';
@@ -21,9 +22,11 @@ const NewModel = (props) => {
     }, []);
 
     const history = useHistory();
+    const [cookies, setCookie] = useCookies();
 
     const [validated, setValidated] = useState(false);
-    const [organization, setOrganization] = useState('');
+    const [orgList, setOrgList] = useState([]);
+    const [selectedOrg, setSelectedOrg] = useState('');
     const [terms, setTerms] = useState('');
     const [conditions, setConditions] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
@@ -35,7 +38,7 @@ const NewModel = (props) => {
     const validateForm = useCallback(
         () => {
             if (
-                organization && organization.length > 0 &&
+                selectedOrg && selectedOrg.length > 0 &&
                 terms && terms.length > 10 &&
                 conditions && conditions.length > 10 &&
                 expirationDate && expirationDate.length > 0 &&
@@ -48,8 +51,34 @@ const NewModel = (props) => {
                 setSubmitDisabled(true);
             }
         },
-        [organization, terms, conditions, expirationDate, isLoading]
+        [selectedOrg, terms, conditions, expirationDate, isLoading]
     );
+
+    useEffect(() => {
+        try {
+            api
+                .get('/org/index')
+                .then(res => {
+                    if (res.status === 200) {
+                        const orgs = res.data.orgs.filter(org => org !== cookies.ledgerId);
+                        setOrgList(orgs);
+                        setSelectedOrg(orgs.length > 0 && orgs[0]);
+                    } else {
+                        console.log('Oopps... something wrong, status code ' + res.status);
+                        return function cleanup() { }
+                    }
+                })
+                .catch((err) => {
+                    console.log('Oopps... something wrong');
+                    console.log(err);
+                    return function cleanup() { }
+                });
+        } catch (error) {
+            console.log('Oopps... something wrong');
+            console.log(error);
+            return function cleanup() { }
+        }
+    }, []);
 
     useEffect(() => {
         validateForm();
@@ -113,13 +142,37 @@ const NewModel = (props) => {
                         <Flex mx={-3} flexWrap={"wrap"}>
                             <Box width={1} px={3}>
                                 <Field label="Organization" width={1}>
-                                    <Form.Input
+                                    {/* <Form.Input
                                         type="text"
                                         required
-                                        onChange={(e) => setOrganization(e.target.value)}
+                                        onChange={(e) => setSelectedOrg(e.target.value)}
                                         value={organization}
                                         width={1}
-                                    />
+                                    /> */}
+                                    <select
+                                        required
+                                        onChange={e => setSelectedOrg(e.target.value)}
+                                        style={
+                                            {
+                                                boxSizing: "border-box",
+                                                width: "100%",
+                                                lineHeight: "1.5",
+                                                height: "auto",
+                                                color: "#3F3D4B",
+                                                backgroundColor: "#fff",
+                                                fontSize: "1rem",
+                                                padding: "16px 48px 16px 16px",
+                                                border: "1px solid transparent",
+                                                borderColor: "#ccc",
+                                                borderRadius: "4px",
+                                                boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                                                font: "400 16px Arial",
+                                                outline: "none"
+                                            }
+                                        }
+                                    >
+                                        {orgList.map(org => <option key={org} value={org}>{org}</option>)}
+                                    </select>
                                 </Field>
                             </Box>
                             <Box width={1} px={3}>

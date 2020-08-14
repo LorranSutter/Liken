@@ -4,6 +4,13 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const networkConnection = require('../utils/networkConnection');
 
+exports.index = async (req, res) => {
+
+    const orgs = (await User.find()).map(user => user.login);
+
+    return res.json({ orgs });
+};
+
 exports.login = async (req, res) => {
 
     const { login, password } = req.body;
