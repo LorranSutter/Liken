@@ -238,15 +238,13 @@ Financial Institution
     - [Express.js](http://expressjs.com/) - web application framework
     - [MongoDB](https://www.mongodb.com/) - NoSQL database
     - [Mongoose](https://mongoosejs.com/) - object data modeling (ODM) library for MongoDB and Node.js
-    <!-- - [Async](https://caolan.github.io/async/v3/) - library to perform asynchronous operations -->
-    <!-- - [Express validator](https://express-validator.github.io/docs/) - middleware to validate data -->
+    - [Async](https://caolan.github.io/async/v3/) - library to perform asynchronous operations
+    - [Express validator](https://express-validator.github.io/docs/) - middleware to validate data
     - [Bcryptjs](https://www.npmjs.com/package/bcryptjs) - library to perform cryptography
     - [JWT.IO](https://jwt.io/) - JSON Web Tokens to allow, decode, verify and generate JWT
     - [Dotenv](https://www.npmjs.com/package/dotenv) - loads environment variables from a .env file
     - [Jest](https://jestjs.io/) - library for tests
-    <!-- - [Moment.js](https://momentjs.com/) - parsing, validating, manipulating and displaying dates and times -->
     - [Nodemon](https://www.npmjs.com/package/nodemon) - monitor and restart server after changes
-    <!-- - [Supertest](https://github.com/visionmedia/supertest) - HTTP assertions provider -->
 
 3. Frontend
 
@@ -254,8 +252,9 @@ Financial Institution
     - [ReactJS](https://reactjs.org/) - frontend library
     - [React Navigation](https://reactnavigation.org/) - routing and navigation for react apps
     - [React router dom](https://www.npmjs.com/package/react-router-dom) - routing and navigation for react apps
-    - [React-cookie](https://www.npmjs.com/package/react-cookie) - cookie interaction for React applications
-    <!-- - [React dropzone](https://react-dropzone.js.org/) - create zone to drop files -->
+    - [React cookie](https://www.npmjs.com/package/react-cookie) - cookie interaction for React applications
+    - [React dropzone](https://react-dropzone.js.org/) - create zone to drop files
+    - [React collapsed](https://www.npmjs.com/package/react-collapsed) - a custom hook for creating expand/collapse components
     - [Axios](https://www.npmjs.com/package/axios) - HTTP requests
 
 ## :cookie: Credits
