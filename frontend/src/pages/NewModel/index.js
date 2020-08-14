@@ -14,20 +14,35 @@ const NewModel = () => {
     const history = useHistory();
 
     const [validated, setValidated] = useState(false);
+    const [modelData, setModelData] = useState({});
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [selectedFile, setSelectedFile] = useState(false);
+    const [selectedFile, setSelectedFile] = useState();
+
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [newModelMsg, setNewModelMsg] = useState('');
 
+    function handleModelName(e) {
+        setModelData({ ...modelData, modelName: e.target.value });
+    };
+
+    function handleModelDescription(e) {
+        setModelData({ ...modelData, modelDescription: e.target.value });
+    };
+
+    function handleModelObject(buffer) {
+        setModelData({ ...modelData, modelObject: buffer });
+    };
 
     const validateForm = useCallback(
         () => {
+            console.log(modelData);
             if (
-                name && name.length > 5 &&
-                description && description.length > 10 &&
-                selectedFile &&
+                modelData.modelName && modelData.modelName.length > 5 &&
+                modelData.modelDescription && modelData.modelDescription.length > 10 &&
+                modelData.modelObject && modelData.modelObject.length > 0 &&
                 !isLoading
             ) {
                 setValidated(true);
@@ -37,43 +52,43 @@ const NewModel = () => {
                 setSubmitDisabled(true);
             }
         },
-        [name, description, selectedFile, isLoading]
+        [modelData, isLoading]
     );
 
     useEffect(() => {
         validateForm();
     }, [validateForm]);
 
-    // useEffect(() => {
-    //     if (validated && isLoading) {
-    //         try {
-    //             api
-    //                 .post('/fi/createClient', qs.stringify(clientData))
-    //                 .then(res => {
-    //                     console.log(res);
-    //                     if (res.status === 200) {
-    //                         setNewModelMsg(res.data.message);
-    //                     } else {
-    //                         console.log('Oopps... something wrong, status code ' + res.status);
-    //                         return function cleanup() { }
-    //                     }
-    //                 })
-    //                 .catch((err) => {
-    //                     console.log('Oopps... something wrong');
-    //                     console.log(err);
-    //                     return function cleanup() { }
-    //                 })
-    //                 .finally(() => {
-    //                     setIsLoading(false);
-    //                 });
-    //         } catch (error) {
-    //             console.log('Oopps... something wrong');
-    //             console.log(error);
-    //             setIsLoading(false);
-    //             return function cleanup() { }
-    //         }
-    //     }
-    // }, [name, description, validated, isLoading, history]);
+    useEffect(() => {
+        if (validated && isLoading) {
+            try {
+                api
+                    .post('/org/registerModel', qs.stringify(modelData))
+                    .then(res => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            setNewModelMsg(res.data.message);
+                        } else {
+                            console.log('Oopps... something wrong, status code ' + res.status);
+                            return function cleanup() { }
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('Oopps... something wrong');
+                        console.log(err);
+                        return function cleanup() { }
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            } catch (error) {
+                console.log('Oopps... something wrong');
+                console.log(error);
+                setIsLoading(false);
+                return function cleanup() { }
+            }
+        }
+    }, [modelData, isLoading, history]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -105,8 +120,9 @@ const NewModel = () => {
                                     <Form.Input
                                         type="text"
                                         required
-                                        onChange={(e) => setName(e.target.value)}
-                                        value={name}
+                                        // onChange={(e) => setName(e.target.value)}
+                                        onChange={handleModelName}
+                                        value={modelData.modelName}
                                         width={1}
                                     />
                                 </Field>
@@ -115,8 +131,9 @@ const NewModel = () => {
                                 <Field label="Description" width={1}>
                                     <textarea
                                         required
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        value={description}
+                                        // onChange={(e) => setDescription(e.target.value)}
+                                        onChange={handleModelDescription}
+                                        value={modelData.modelDescription}
                                         name="Description"
                                         rows="7"
                                         style={
@@ -146,11 +163,11 @@ const NewModel = () => {
                     </Card>
                     <Card>
                         <Box pb={3}>
-                            <Dropzone onFileUploaded={setSelectedFile} />
+                            <Dropzone onFileUploaded={handleModelObject} />
                         </Box>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
-                                <Button icon='Add' type="submit" mt={2} disabled={submitDisabled}>
+                                <Button icon={!isLoading && 'Add'} type="submit" mt={2} disabled={submitDisabled}>
                                     {isLoading ? <Loader color="white" /> : <p>Register new model</p>}
                                 </Button>
                             </Box>

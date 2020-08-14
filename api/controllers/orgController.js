@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 
     const userJWT = jwt.sign({ login }, process.env.PRIVATE_KEY, { algorithm: 'HS256' });
 
-    return res.json({ userJWT, ledgerId: org.login, orgCredentials: org.orgCredentials });
+    return res.json({ userJWT, ledgerUser: org.login, orgCredentials: org.orgCredentials });
 };
 
 exports.registerModel = async (req, res) => {

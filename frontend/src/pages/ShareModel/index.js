@@ -72,7 +72,7 @@ const NewModel = (props) => {
                 .get('/org/index')
                 .then(res => {
                     if (res.status === 200) {
-                        const orgs = res.data.orgs.filter(org => org !== cookies.ledgerId);
+                        const orgs = res.data.orgs.filter(org => org !== cookies.ledgerUser);
                         setOrgList(orgs);
                         setOrgData({
                             ...orgData,

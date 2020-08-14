@@ -221,7 +221,7 @@ const Org = () => {
 
     function handleClickLogout() {
         removeCookie('userJWT');
-        removeCookie('ledgerId');
+        removeCookie('ledgerUser');
         removeCookie('orgCredentials');
         history.push('/login');
     }

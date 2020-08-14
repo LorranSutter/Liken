@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Flex, Box, Heading, Text, Button, Icon } from 'rimble-ui';
+import { Flex, Box, Heading, Text, Button } from 'rimble-ui';
 import useCollapse from 'react-collapsed';
 
 import styles from './styles.module.css';
 
+//FIXME Not correctly aligned when new model is added
 const Data = React.memo(({ modelKey, title, modelData, share }) => {
 
     const history = useHistory();

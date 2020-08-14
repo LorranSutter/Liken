@@ -14,21 +14,20 @@ router.post('/login',
     validate,
     orgController.login);
 
-// TODO Change to check login
 router.post('/registerModel',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.registerModel);
 
-// TODO Change to check login
+// TODO Frontend integration - getModelData endpoint
 router.get('/getModelData',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.getModelData);
 
-// TODO Change to check login\
+// TODO Frontend integration - getFullModelData endpoint
 router.get('/getFullModelData',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.getFullModelData);
 
@@ -37,9 +36,9 @@ router.post('/approve',
     credentials.getOrgCredentials,
     orgController.approve);
 
-// TODO Change to check login\
+// TODO Frontend integration - remove endpoint
 router.post('/remove',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.remove);
 
@@ -48,15 +47,14 @@ router.get('/queryAllModelsByOwner',
     credentials.getOrgCredentials,
     orgController.queryAllModelsByOwner);
 
-// TODO Change to check login
 router.get('/queryAllModelsByApprovedUser',
     checkLogin,
     credentials.getOrgCredentials,
     orgController.queryAllModelsByApprovedUser);
 
-// TODO Change to check login
+// TODO Frontend integration - updateModel endpoint
 router.put('/updateModel',
-    // checkLogin,
+    checkLogin,
     credentials.getOrgCredentials,
     orgController.updateModel);
 
