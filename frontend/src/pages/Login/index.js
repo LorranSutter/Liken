@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Form, Field, Radio, Button, Loader, Image } from 'rimble-ui';
+import { Flex, Box, Card,, Form, Field, Button, Loader, Image } from 'rimble-ui';
 
 import qs from 'qs';
 
@@ -26,10 +26,6 @@ const Login = () => {
 
     function handlePassword(e) {
         setPassword(e.target.value);
-    };
-
-    function handleRadio(e) {
-        setUserType(e.target.value);
     };
 
     const validateForm = useCallback(
@@ -107,7 +103,6 @@ const Login = () => {
                         width={1}
                         src={logo}
                     />
-                    {/* <Heading as={'h1'} mt={1} mb={3} textAlign={'center'} color={'primary'}>eKYC</Heading> */}
                     <Form onSubmit={handleSubmit}>
                         <Flex mx={-3} flexWrap={"wrap"}>
                             <Box width={1} px={3}>

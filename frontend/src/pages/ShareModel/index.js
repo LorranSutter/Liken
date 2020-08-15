@@ -101,13 +101,11 @@ const NewModel = (props) => {
     }, [validateForm]);
 
     useEffect(() => {
-        console.log(orgData);
         if (validated && isLoading) {
             try {
                 api
                     .post('/org/approve', qs.stringify(orgData))
                     .then(res => {
-                        console.log(res);
                         if (res.status === 200) {
                             // setNewModelMsg(res.data.message);
                         } else {
@@ -162,7 +160,6 @@ const NewModel = (props) => {
                                 <Field label="Organization" width={1}>
                                     <select
                                         required
-                                        // onChange={e => setSelectedOrg(e.target.value)}
                                         onChange={handleSelectOrg}
                                         style={
                                             {
@@ -191,7 +188,6 @@ const NewModel = (props) => {
                                 <Field label="Terms" width={1}>
                                     <textarea
                                         required
-                                        // onChange={(e) => setTerms(e.target.value)}
                                         onChange={handleTerms}
                                         value={orgData.terms}
                                         name="Terms"
@@ -223,7 +219,6 @@ const NewModel = (props) => {
                                 <Field label="Conditions" width={1}>
                                     <textarea
                                         required
-                                        // onChange={(e) => setConditions(e.target.value)}
                                         onChange={handleConditions}
                                         value={orgData.conditions}
                                         name="Conditions"
@@ -256,7 +251,6 @@ const NewModel = (props) => {
                                     <Form.Input
                                         type="date"
                                         required
-                                        // onChange={(e) => setExpirationDate(e.target.value)}
                                         onChange={handleExpirationDate}
                                         value={orgData.expirationDate}
                                         width={1}

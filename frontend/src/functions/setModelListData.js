@@ -12,6 +12,5 @@ export function setModelListData(modelListData, setData) {
         }
     });
     // ].filter(item => item.value);
-    // console.log(modelListData);
     setData(modelListData);
 }

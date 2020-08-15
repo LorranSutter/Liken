@@ -17,9 +17,6 @@ const Data = React.memo(({ modelKey, title, modelData, share }) => {
 
     return (
         <Box>
-            {/* item.label === 'Name' && <Heading as={'h3'} color={'#4067ED'}>{item.value}</Heading> */}
-            {/* <Heading as={'h3'} color={'#4067ED'}>{title}</Heading> */}
-
             <Flex justifyContent='space-between' alignItems='flex-end'>
                 <Box ml={'40px'}>
                     {modelData.map((item, key) => (
@@ -47,7 +44,6 @@ const Data = React.memo(({ modelKey, title, modelData, share }) => {
                             onClick={handleShareModel}
                         >
                             Share model
-                            {/* {isLoadingRemove ? <Loader color="white" /> : <p>Share model</p>} */}
                         </Button>
                     )}
                 </Box>

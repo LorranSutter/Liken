@@ -9,8 +9,6 @@ import api from '../../service/api';
 import Dropzone from '../../components/Dropzone';
 import CustomToast from '../../components/CustomToast';
 
-// import styles from './styles.module.css';
-
 const NewModel = () => {
 
     const history = useHistory();
@@ -36,7 +34,6 @@ const NewModel = () => {
 
     const validateForm = useCallback(
         () => {
-            console.log(modelData);
             if (
                 modelData.modelName && modelData.modelName.length > 5 &&
                 modelData.modelDescription && modelData.modelDescription.length > 10 &&
@@ -63,7 +60,6 @@ const NewModel = () => {
                 api
                     .post('/org/registerModel', qs.stringify(modelData))
                     .then(res => {
-                        console.log(res);
                         if (res.status === 200) {
                             // setNewModelMsg(res.data.message);
                         } else {
@@ -119,7 +115,6 @@ const NewModel = () => {
                                     <Form.Input
                                         type="text"
                                         required
-                                        // onChange={(e) => setName(e.target.value)}
                                         onChange={handleModelName}
                                         value={modelData.modelName}
                                         width={1}
@@ -130,7 +125,6 @@ const NewModel = () => {
                                 <Field label="Description" width={1}>
                                     <textarea
                                         required
-                                        // onChange={(e) => setDescription(e.target.value)}
                                         onChange={handleModelDescription}
                                         value={modelData.modelDescription}
                                         name="Description"
