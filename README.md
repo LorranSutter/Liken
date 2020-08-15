@@ -24,6 +24,7 @@
 
 - [Introduction](#-introduction)
 - [Why Liken?](#thinking-why-liken)
+- [Architecture](#bricks-architecture)
 - [Flow Chart](#ocean-flow-chart)
 - [Sequence Diagram](#film_strip-sequence-diagram)
 - [Timeline](#rocket-timeline)
@@ -32,24 +33,20 @@
 - [How to run](#runner-how-to-run)
 - [Resources](#book-resources-and-tools-hammer)
 - [Technologies](#computer-technologies)
-<!-- - [Architecture](#architecture) -->
 
 ## 🧐 Introduction
 
-In the chart below you can see the big data growth along the last years until 2019 and a growth projection for 274 billion dollars in 2022.
+In the chart below (source: <a href="https://www.pcmag.com/news/the-big-data-market-is-set-to-skyrocket-by-2022">pcmag</a>) you can see the big data growth along the last years until 2019 and a growth projection for 274 billion dollars in 2022.
 
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597470077/Liken/BigData_market_growth.svg'/>
-<figcaption>Source <a href="https://www.pcmag.com/news/the-big-data-market-is-set-to-skyrocket-by-2022">pcmag</a></figcaption>
 
 </div>
 
 </br>
 
-In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focus on the most relevant data in order to build a reliable environment.
-
-This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models. The ledger would act as an access management system storing the permission by which a business can access and use the organizations’s data.
+In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focuses on the most relevant data in order to build a reliable environment.
 
 ## :thinking: Why Liken?
 
@@ -59,17 +56,21 @@ This project combines these two cutting edge technologies. Since huge datasets a
 
 :bulb: **Liken** will provide a save environment where every organization that joins will benefit sharing their data and AI models under terms and conditions.
 
-<!-- ## Architecture
+## :bricks: Architecture
+
+This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models. The ledger would act as an access management system storing the permission by which a business can access and use the organization's data.
 
 <div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1596662592/Liken/Liken_architecture.png' height=600/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597477615/Liken/Architecture.svg'/>
 
-</div> -->
+</div>
 
 ## :ocean: Flow Chart
 
-The following chart represents the flow of this MPV. You can check the full flow chart [here](FullSolution.md#flow-chart).
+The following chart represents the flow of this MPV. You can check the flow chart of the full solution [here](FullSolution.md#flow-chart).
+
+Every organization that joins the network will be able to interact with the ledger through the user interface. Both registration of a new model and access to public model data can easily be requested through the interface. However, transactions that can interact with sensitive information from other network participants, such as updating and approval management, requires another level of security. In these cases, both server authentications and chaincode verifications are employed.
 
 <div align="center">
 
@@ -98,7 +99,7 @@ This is the timeline implementation and future goals for this project:
 
 1. The current code is a full blockchain-based implementation: Hyperledger Fabric, Node.js and ReactJS, which allows simple AI model sharing among organizations in the network.
 2. After new refinements form this prototype, we will be able to deploy a MVP, where organizations will be able to share their AI models safely.
-3. Finnaly, we want to provide integrations with datalakes and [IPFS](https://ipfs.io/).
+3. Finally, we want to provide integrations with datalakes and [IPFS](https://ipfs.io/).
     - IPFS is a distributed file system. Adopting this approach we will reach more decentralization and reliability.
     - Having the datasets and models stored in IPFS, only the file reference will be stored in the ledger, preventing overloading.
 4. As a first great goal, we want to introduce [homomorphic encryption](https://en.wikipedia.org/wiki/Homomorphic_encryption) (HE). 
@@ -129,7 +130,7 @@ This is the timeline implementation and future goals for this project:
 
 | Parameter        | Type     | Description                                                        |
 |-                 |-         |-                                                                   |
-| `modelKey`       | `string` | CouchDB key used to querying the model data.                       |
+| `modelKey`       | `string` | CouchDB key used to query the model data.                          |
 | `terms`          | `buffer` | Terms of the model loan.                                           |
 | `conditions`     | `string` | Conditions of the model loan.                                      |
 | `expirationDate` | `Date`   | Deadline by which the borrowing organization can update the model. |
@@ -141,15 +142,15 @@ This is the timeline implementation and future goals for this project:
 |-|:-:|-|-|-|
 | `initLedger` | public | `array of objects` initialData  | Populates the ledger with initialData parameter. Can be called only once. |  |
 | `registerModel` | public | `object` modelData | Stringifies model parameter. Saves the model in the ledger. | `bool` success or fail |
-| `approve` | public | `string` modelKey, `string` user | Allows user to update model. Creates composite key. | `bool` success or fail |
+| `approve` | public | `string` modelKey, `string` user | Allows users to update models. Creates composite key. | `bool` success or fail |
 | `remove` | public | `string` modelKey, `string` user | Removes user allowance. Deletes composite key. | `bool` success or fail |
-| `updateModel` | public | `string` modelKey, `object` modelUpdate | Checks if caller is allowed to update model. Updates model. | `bool` success or fail |
-| `queryAllModelsByOwner` | public |  | Verifies if caller is owner of any registered model. Returns a list od models. | `array of objects` models |
+| `updateModel` | public | `string` modelKey, `object` modelUpdate | Checks if the caller is allowed to update the model. Update model. | `bool` success or fail |
+| `queryAllModelsByOwner` | public |  | Verifies if caller is owner of any registered model. Returns a list of models. | `array of objects` models |
 | `queryAllModelsByApprovedUser` | public |  | Returns a list of models approved for caller | `array of objects` models |
 | `isOwner` | private | `string` modelKey | Verifies if caller is the model owner | `bool` |
 | `isApproved` | private | `string` modelKey | Verifies if user is owner or allowed to update model | `bool` |
 | `getCallerId` | private |  | Extracts the CA Id. | `string` Id |
-| `getModelsByCaller` | private |  | Returns a list of models approved by caller. | `array of objects` models |
+| `getModelsByCaller` | private |  | Returns a list of models approved by the caller. | `array of objects` models |
 | `getRelationsArray` | private | `Iterator` relationsResultIterator | Iterates a composite key iterator. | `array of strings` model keys |
 
 ## :fishing_pole_and_fish: API information
