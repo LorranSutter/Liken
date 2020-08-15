@@ -255,6 +255,7 @@ Organization
 - [Insomnia](https://insomnia.rest/) - API explorer
 - [HLF SDK documentation](https://hyperledger.github.io/fabric-chaincode-node/release-1.4/api/index.html)
 - [IPFS](https://ipfs.io/) - InterPlanetary File System
+- [Google Cloud Platform](https://cloud.google.com/) - cloud computing services from Google
 
 # :computer: Technologies
 
