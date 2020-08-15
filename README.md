@@ -10,8 +10,6 @@
 
 </div>
 
-<br/>
-
 <p align="center">
    Blockchain solution for sharing AI models among organizations, using Hyperledger Fabric, Node.js and ReactJS. Presented as Capstone Project for the <a href='https://www.georgebrown.ca/programs/blockchain-development-program-t175/'>Blockchain Development</a> program from <a href='https://www.georgebrown.ca'>George Brown College</a>.   
 </p>
@@ -19,6 +17,12 @@
 <p align="center">
    You can check out the slides used in the final presentation here: <a href='https://docs.google.com/presentation/d/1PPZ9GaLhyMMlVsDvoo3Ye-qA5rD40s_PqcJY--EsNaU/edit#slide=id.g8f9c323f0d_0_2046'>Final Presentation</a>.
 </p>
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597466877/Liken/Liken_demo.gif'/>
+
+</div>
 
 ## Summary
 
