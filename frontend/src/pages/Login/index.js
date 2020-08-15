@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card,, Form, Field, Button, Loader, Image } from 'rimble-ui';
+import { Flex, Box, Card, Form, Field, Button, Loader, Image } from 'rimble-ui';
 
 import qs from 'qs';
 
