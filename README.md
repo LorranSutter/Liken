@@ -1,11 +1,5 @@
 <div align="center">
 
-<h2><i>Under development...</i></h2>
-
-</div>
-
-<div align="center">
-
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597037735/Liken/Logo.svg' height=200/>
 
 </div>
@@ -47,6 +41,7 @@ In the chart below you can see the big data growth along the last years until 20
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597470077/Liken/BigData_market_growth.svg'/>
+<figcaption>Source <a href="https://www.pcmag.com/news/the-big-data-market-is-set-to-skyrocket-by-2022">pcmag</a></figcaption>
 
 </div>
 
