@@ -4,18 +4,20 @@
 
 </div>
 
-<div align="center" id="intro">
+<div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597037735/Liken/Logo.svg' height=200/>
 
 </div>
+
+</br>
 
 <p align="center">
    Blockchain solution for sharing AI models among organizations, using Hyperledger Fabric, Node.js and ReactJS. Presented as Capstone Project for the <a href='https://www.georgebrown.ca/programs/blockchain-development-program-t175/'>Blockchain Development</a> program from <a href='https://www.georgebrown.ca'>George Brown College</a>.   
 </p>
 
 <p align="center">
-   You can check out the slides used in the final presentation here: <a href='https://docs.google.com/presentation/d/1PPZ9GaLhyMMlVsDvoo3Ye-qA5rD40s_PqcJY--EsNaU/edit#slide=id.g8f9c323f0d_0_2046'>Final Presentation</a>.
+   You can check out the slides used in the final presentation here: <a href='https://docs.google.com/presentation/d/1PPZ9GaLhyMMlVsDvoo3Ye-qA5rD40s_PqcJY--EsNaU/edit?usp=sharing'>Final Presentation</a>.
 </p>
 
 <div align="center">
@@ -24,23 +26,33 @@
 
 </div>
 
-## Summary
+## :page_with_curl: Summary
 
-- [Intro](#intro)
+- [Introduction](#introduction)
 - [Why Liken?](#thinking-why-liken)
-- [Flow Chart](#flow-chart)
-- [Sequence Diagram](#sequence-diagram)
+- [Flow Chart](#ocean-flow-chart)
+- [Sequence Diagram](#film_strip-sequence-diagram)
+- [Timeline](#rocket-timeline)
+- [Ledger information](#chains-ledger-information)
+- [API information](#fishing_pole_and_fish-api-information)
+- [How to run](#runner-how-to-run)
 - [Resources](#book-resources-and-tools-hammer)
 - [Technologies](#computer-technologies)
-- [How to run](#runner-how-to-run)
-- [Timeline](#rocket-timeline)
 <!-- - [Architecture](#architecture) -->
+
+## 🧐 Introduction
+
+In the chart below you can see the big data growth along the last years until 2019 and a growth projection for 274 billion dollars in 2022.
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597470077/Liken/BigData_market_growth.svg'/>
+
+</div>
 
 In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focus on the most relevant data in order to build a reliable environment.
 
-This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models.
-
-<!-- The ledger would act as an access management system storing the proofs and permission by which a business can access and use the user’s data. -->
+This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models. The ledger would act as an access management system storing the permission by which a business can access and use the organizations’s data.
 
 ## :thinking: Why Liken?
 
@@ -58,7 +70,7 @@ This project combines these two cutting edge technologies. Since huge datasets a
 
 </div> -->
 
-## Flow Chart
+## :ocean: Flow Chart
 
 The following chart represents the flow of this MPV. You can check the full flow chart [here](FullSolution.md#flow-chart).
 
@@ -68,7 +80,7 @@ The following chart represents the flow of this MPV. You can check the full flow
 
 </div>
 
-## Sequence Diagram
+## :film_strip: Sequence Diagram
 
 The following diagram represents the flow of this MPV. You can check the full sequence diagram [here](FullSolution.md#sequence-diagram).
 
@@ -100,6 +112,63 @@ This is the timeline implementation and future goals for this project:
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597459592/Liken/Timeline.svg'/>
 
 </div>
+
+## :chains: Ledger Information
+
+### Data stored in the ledger
+
+#### Model Data
+
+| Parameter          | Type     | Description                                          |
+|-                   |-         |-                                                     |
+| `owner`            | `string` | Organization who published first and owns the model. |
+| `modelObject`      | `buffer` | Buffer format of the model file.                     |
+| `modelName`        | `string` | Name of the model.                                   |
+| `modelDescription` | `string` | Description of the model.                            |
+| `publicationDate`  | `Date`   | Last time when the model was updated.                |
+| `whoPublishedLast` | `string` | Who was the organization who last updated the model. |
+
+#### Loan information
+
+| Parameter        | Type     | Description                                                        |
+|-                 |-         |-                                                                   |
+| `modelKey`       | `string` | CouchDB key used to querying the model data.                       |
+| `terms`          | `buffer` | Terms of the model loan.                                           |
+| `conditions`     | `string` | Conditions of the model loan.                                      |
+| `expirationDate` | `Date`   | Deadline by which the borrowing organization can update the model. |
+| `user`           | `string` | Organization who borrowed the model.                               |
+
+### Chaincode functions
+
+| Function | Visibility | Parameters | Action | Returns |
+|-|:-:|-|-|-|
+| `initLedger` | public | `array of objects` initialData  | Populates the ledger with initialData parameter. Can be called only once. |  |
+| `registerModel` | public | `object` modelData | Stringifies model parameter. Saves the model in the ledger. | `bool` success or fail |
+| `approve` | public | `string` modelKey, `string` user | Allows user to update model. Creates composite key. | `bool` success or fail |
+| `remove` | public | `string` modelKey, `string` user | Removes user allowance. Deletes composite key. | `bool` success or fail |
+| `updateModel` | public | `string` modelKey, `object` modelUpdate | Checks if caller is allowed to update model. Updates model. | `bool` success or fail |
+| `queryAllModelsByOwner` | public |  | Verifies if caller is owner of any registered model. Returns a list od models. | `array of objects` models |
+| `queryAllModelsByApprovedUser` | public |  | Returns a list of models approved for caller | `array of objects` models |
+| `isOwner` | private | `string` modelKey | Verifies if caller is the model owner | `bool` |
+| `isApproved` | private | `string` modelKey | Verifies if user is owner or allowed to update model | `bool` |
+| `getCallerId` | private |  | Extracts the CA Id. | `string` Id |
+| `getModelsByCaller` | private |  | Returns a list of models approved by caller. | `array of objects` models |
+| `getRelationsArray` | private | `Iterator` relationsResultIterator | Iterates a composite key iterator. | `array of strings` model keys |
+
+## :fishing_pole_and_fish: API information
+
+|End Point                          |Method|Params                                      | HLF function                 |Returns                  |
+|:---                               |:---: | :---                                       | :---                         |             :---        |
+|`\org\index`                       | GET  |-                                           |      -                       |list of organizations    |
+|`\org\login`                       | POST |login; passowrd                             |      -                       |JWT; credentials         |
+|`\org\registerModel`               | POST |credentials; name; description; model object|`registerModel`               |status message; model key|
+|`\org\getModelData`                | GET  |modelKey; credentials                       |`getModelData`                |public model data        |
+|`\org\getFullModelData`            | GET  |modelKey; credentials                       |`getFullModelData`            |full model data          |
+|`\org\approve`                     | POST |modelKey; credentials; org; terms           |`approve`                     |status message           |
+|`\org\remove`                      | POST |modelKey; credentials;                      |`remove`                      |status message           |
+|`\org\queryAllModelsByOwner`       | GET  |credentials;                                |`queryAllModelsByOwner`       |list of models           |
+|`\org\queryAllModelsByApprovedUser`| GET  |credentials;                                |`queryAllModelsByApprovedUser`|list of models           |
+|`\org\updateModel`                 | PUT  |credentials; name; description; model object|`updateModel`                 |status message           |
 
 ## :runner: How to run
 
