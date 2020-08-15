@@ -45,6 +45,8 @@ In the chart below you can see the big data growth along the last years until 20
 
 </div>
 
+</br>
+
 In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focus on the most relevant data in order to build a reliable environment.
 
 This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models. The ledger would act as an access management system storing the permission by which a business can access and use the organizations’s data.
