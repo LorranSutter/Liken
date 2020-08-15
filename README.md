@@ -12,21 +12,39 @@
 
 <br/>
 
+<p align="center">
+   Blockchain solution for sharing AI models among organizations, using Hyperledger Fabric, Node.js and ReactJS. Presented as Capstone Project for the <a href='https://www.georgebrown.ca/programs/blockchain-development-program-t175/'>Blockchain Development</a> program from <a href='https://www.georgebrown.ca'>George Brown College</a>.   
+</p>
+
+<p align="center">
+   You can check out the slides used in the final presentation here: <a href='https://docs.google.com/presentation/d/1PPZ9GaLhyMMlVsDvoo3Ye-qA5rD40s_PqcJY--EsNaU/edit#slide=id.g8f9c323f0d_0_2046'>Final Presentation</a>.
+</p>
+
+## Summary
+
+- [Intro](#intro)
+- [Why Liken?](#thinking-why-liken)
+- [Flow Chart](#flow-chart)
+- [Sequence Diagram](#sequence-diagram)
+- [Resources](#book-resources-and-tools-hammer)
+- [Technologies](#computer-technologies)
+- [How to run](#runner-how-to-run)
+- [Timeline](#rocket-timeline)
+<!-- - [Architecture](#architecture) -->
+
 In the era where data is the new gold, organizations can have predictive advantages in the market if they have access to the right tools or to the right sources. On one hand we have machine learning and deep learning algorithms, which requires a great amount of data to get better results. On the other hand we have blockchain, which focus on the most relevant data in order to build a reliable environment.
 
 This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models.
 
 <!-- The ledger would act as an access management system storing the proofs and permission by which a business can access and use the user’s data. -->
 
-## Summary
+## :thinking: Why Liken?
 
-- [Intro](#intro)
-- [Flow Chart](#flow-chart)
-- [Sequence Diagram](#sequence-diagram)
-- [Resources](#book-resources-and-tools-hammer)
-- [Technologies](#computer-technologies)
-<!-- - [Architecture](#architecture) -->
-<!-- - [How to run](#runner-how-to-run) -->
+:herb: The original word, [Lichen](https://en.wikipedia.org/wiki/Lichen), is a mutually beneficial relationship of algae or bacteria and fungi.
+
+:deciduous_tree: Finding Lichen on the trees is a good sign that the environment is healthy and it is ok to breathe that air.
+
+:bulb: **Liken** will provide a save environment where every organization that joins will benefit sharing their data and AI models under terms and conditions.
 
 <!-- ## Architecture
 
@@ -50,15 +68,36 @@ The following chart represents the flow of this MPV. You can check the full flow
 
 The following diagram represents the flow of this MPV. You can check the full sequence diagram [here](FullSolution.md#sequence-diagram).
 
+1. Organizations are able to safely register their AI models in the ledger.
+2. Organizations can also approve other organizations to update their registered models.
+    - In HLF, a composite key is created to relate the model key to the organization. Also, the terms, conditions and expiration date are stored in the ledger along this composite key.
+3. The allowed organizations can see and update the models, which will increase the speed of improvement of the shared models.
+
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597129372/Liken/Liken_Sequence_Diagram_MVP.svg'/>
 
 </div>
 
-<!-- <a href='https://res.cloudinary.com/lorransutter/image/upload/v1597129438/Liken/Liken_Sequence_Diagram_Full.svg'></a> -->
+## :rocket: Timeline
 
-<!-- ## :runner: How to run
+This is the timeline implementation and future goals for this project:
+
+1. The current code is a full blockchain-based implementation: Hyperledger Fabric, Node.js and ReactJS, which allows simple AI model sharing among organizations in the network.
+2. After new refinements form this prototype, we will be able to deploy a MVP, where organizations will be able to share their AI models safely.
+3. Finnaly, we want to provide integrations with datalakes and [IPFS](https://ipfs.io/).
+    - IPFS is a distributed file system. Adopting this approach we will reach more decentralization and reliability.
+    - Having the datasets and models stored in IPFS, only the file reference will be stored in the ledger, preventing overloading.
+4. As a first great goal, we want to introduce [homomorphic encryption](https://en.wikipedia.org/wiki/Homomorphic_encryption) (HE). 
+    - HE will allow organizations to perform operations on encrypted private data without disclosing information, adding a new layer of security and privacy.
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1597459592/Liken/Timeline.svg'/>
+
+</div>
+
+## :runner: How to run
 
 This project was developed using a [Google Cloud Platform](https://cloud.google.com/) virtual machine, so every step must be performed in a VM CLI under a _sudo -s_ command.
 
@@ -206,20 +245,16 @@ cd ..
 
 #### Login credentials
 
-Client
-* login: user01 / user02 / JonasKahnwald / MarthaNielsen / ClaudiaTiedemann / ElisabethDoppler / H.G.Tannhaus
-* password: 123456
-
-Financial Institution
-* login: FI1 / FI2
-* password: 123456 -->
+Organization
+* login: apple / microsoft
+* password: strongpassword
 
 # :book: Resources and Tools :hammer:
 
 - [Notion](https://www.notion.so/) - easy to use workspace
 - [Insomnia](https://insomnia.rest/) - API explorer
 - [HLF SDK documentation](https://hyperledger.github.io/fabric-chaincode-node/release-1.4/api/index.html)
-<!-- - [Private data - article](https://medium.com/@spsingh559/deep-dive-into-private-data-in-hyperledger-fabric-cf23931e8f96) -->
+- [IPFS](https://ipfs.io/) - InterPlanetary File System
 
 # :computer: Technologies
 
