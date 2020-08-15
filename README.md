@@ -28,7 +28,7 @@
 
 ## :page_with_curl: Summary
 
-- [Introduction](#introduction)
+- [Introduction](#-introduction)
 - [Why Liken?](#thinking-why-liken)
 - [Flow Chart](#ocean-flow-chart)
 - [Sequence Diagram](#film_strip-sequence-diagram)
