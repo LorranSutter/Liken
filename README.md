@@ -60,6 +60,8 @@ In the era where data is the new gold, organizations can have predictive advanta
 
 This project combines these two cutting edge technologies. Since huge datasets are stored in data lakes, my intention is to use hyperledger fabric as a means to record only the artificial intelligence models and to control data access among organizations that are interested in these models. The ledger would act as an access management system storing the permission by which a business can access and use the organization's data.
 
+Once the organizations join the network, their datasets, AI models and sensitive information will be safe. In a collaborative and decentralized network, AI models can find the right datasets to be improved and organizations can find the right AI models to acquire the market advantage.
+
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1597477615/Liken/Architecture.svg'/>
