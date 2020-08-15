@@ -1,29 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
-
-import styled from 'styled-components';
-import 'react-toastify/dist/ReactToastify.css';
 
 import qs from 'qs';
 
 import api from '../../service/api';
-import ModelData from '../../components/ModelData';
-
-const StyledToastContainer = styled(ToastContainer).attrs({
-    bodyClassName: 'body',
-    progressClassName: 'progress',
-})`
-    width: 30%;
-    .body {
-        color: #595959;
-    }
-    .progress {
-        background: #35C0EDff;
-    }
-  `;
+import CustomToast from '../../components/CustomToast';
 
 const NewModel = (props) => {
 
@@ -294,7 +278,7 @@ const NewModel = (props) => {
                         </Flex>
                     </Card>
                 </Form>
-                <StyledToastContainer
+                <CustomToast
                     position="bottom-right"
                     autoClose={5000}
                     hideProgressBar={false}
